@@ -6,6 +6,5 @@
 
 ### How do I get set up? ###
 ```
-#!bash
 composer require sarehub/commons
 ```
