@@ -10,7 +10,13 @@
   ],
   "require-dev": {
     "phpunit/phpunit": "5.4.*",
-    "fig-r/psr2r-sniffer": "0.3.*"
+    "fig-r/psr2r-sniffer": "0.3.*",
+    "guzzlehttp/guzzle": "~6.0",
+    "nannehuiges/jsend": "2.1.*"
+  },
+  "suggest": {
+    "guzzlehttp/guzzle": "~6.0 Used for rest api and other http communication",
+    "nannehuiges/jsend": "2.1.* Used for rest api"
   },
   "autoload": {
     "psr-4": {
