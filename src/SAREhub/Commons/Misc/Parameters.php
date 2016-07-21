@@ -36,7 +36,7 @@ class Parameters implements \JsonSerializable {
 			return $this->parameters[$name];
 		}
 		
-		throw new \Exception("Required parameter |$name| isn't exists");
+		throw new NotFoundParameterException("Required parameter doesn't exists: $name");
 	}
 	
 	/**
@@ -51,7 +51,7 @@ class Parameters implements \JsonSerializable {
 			return new self($parameters);
 		}
 		
-		throw new \Exception("Parameter |$name| isn't array");
+		throw new ParameterException("Parameter isn't array: $name");
 	}
 	
 	/**
@@ -65,7 +65,7 @@ class Parameters implements \JsonSerializable {
 			return new self($parameters);
 		}
 		
-		throw new \Exception("Parameter |$name| isn't array");
+		throw new ParameterException("Parameter isn't array: $name");
 	}
 	
 	/**
@@ -83,6 +83,9 @@ class Parameters implements \JsonSerializable {
 		return $this->parameters;
 	}
 	
+	/**
+	 * @return array
+	 */
 	function jsonSerialize() {
 		return $this->getAll();
 	}
