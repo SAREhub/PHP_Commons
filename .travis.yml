@@ -10,6 +10,8 @@ cache:
   - $HOME/.composer/cache/files
 
 install:
+ - phpenv config-rm xdebug.ini
  - composer update --prefer-dist
+ - echo "extension = xdebug.so" >> ~/.phpenv/versions/$(phpenv version-name)/etc/php.ini
 
 script: phpunit
