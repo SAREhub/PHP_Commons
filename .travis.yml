@@ -8,9 +8,9 @@ php:
 cache:
  directories:
   - $HOME/.composer/cache/files
-
-before_script:
+install:
  - phpenv config-rm xdebug.ini
+before_script:
  - composer update --prefer-dist
  - echo "extension = xdebug.so" >> ~/.phpenv/versions/$(phpenv version-name)/etc/php.ini
 
