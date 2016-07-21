@@ -9,7 +9,10 @@ cache:
  directories:
   - $HOME/.composer/cache/files
 
+install:
+ - mv /home/travis/.phpenv/versions/$(phpenv version-name)/etc/conf.d/xdebug.ini ~/xdebug.ini
 before_script:
  - composer install --no-interaction --prefer-dist
+ - mv ~/xdebug.ini /home/travis/.phpenv/versions/$(phpenv version-name)/etc/conf.d/xdebug.ini
 
 script: phpunit
