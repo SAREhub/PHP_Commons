@@ -28,7 +28,7 @@ class ParametersTest extends TestCase {
 	}
 	
 	/**
-	 * @expectedException SAREhub\Commons\Misc\NotFoundParameterException
+	 * @expectedException \SAREhub\Commons\Misc\NotFoundParameterException
 	 */
 	public function testNotFoundRequired() {
 		$parameters = new Parameters(['param1' => 1, 'param2' => 2]);
@@ -57,7 +57,7 @@ class ParametersTest extends TestCase {
 	}
 	
 	/**
-	 * @expectedException SAREhub\Commons\Misc\NotFoundParameterException
+	 * @expectedException \SAREhub\Commons\Misc\NotFoundParameterException
 	 */
 	public function testNotFoundRequiredAsMap() {
 		$parameters = new Parameters(['param1' => 1, 'param2' => ['param3' => 3]]);

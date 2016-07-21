@@ -31,7 +31,7 @@ class HttpConfigLoaderTest extends TestCase {
 		)->build();
 		
 		$loader = new HttpConfigLoader("test/test2", $httpClient);
-		$config = $loader->load();
+		$loader->load();
 	}
 	
 	public function testRequestError() {
@@ -41,6 +41,6 @@ class HttpConfigLoaderTest extends TestCase {
 		)->build();
 		
 		$loader = new HttpConfigLoader("test/test2", $httpClient);
-		$config = $loader->load();
+		$loader->load();
 	}
 }
