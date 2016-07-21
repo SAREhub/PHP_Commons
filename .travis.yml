@@ -1,15 +1,22 @@
 sudo: false
 language: php
-
 php:
  - 5.6
  - 7.0
 
+branches:
+  only:
+    - master
+
 cache:
  directories:
-  - $HOME/.composer/cache
+  - $HOME/.composer/cache/files
 
 install:
- - composer update --prefer-dist
+ - mv /home/travis/.phpenv/versions/$(phpenv version-name)/etc/conf.d/xdebug.ini ~/xdebug.ini
+
+before_script:
+ - composer install --no-interaction --prefer-dist
+ - mv ~/xdebug.ini /home/travis/.phpenv/versions/$(phpenv version-name)/etc/conf.d/xdebug.ini
 
 script: phpunit
