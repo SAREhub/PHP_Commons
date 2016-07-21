@@ -19,8 +19,12 @@ before_script:
  - composer install --no-interaction --prefer-dist
  - mv ~/xdebug.ini /home/travis/.phpenv/versions/$(phpenv version-name)/etc/conf.d/xdebug.ini
 
-script: phpunit --coverage-clover build/logs/clover.xml
+script:
+ - phpunit --coverage-clover build/logs/clover.xml
+
+after_script:
+ - vendor/bin/test-reporter
 
 addons:
-    code_climate:
-        repo_token: $CODECLIMATE_TOKEN
+ code_climate:
+  repo_token: $CODECLIMATE_TOKEN
