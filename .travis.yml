@@ -8,10 +8,8 @@ php:
 cache:
  directories:
   - $HOME/.composer/cache/files
-install:
- - phpenv config-rm xdebug.ini
+
 before_script:
- - composer update --prefer-dist
- - echo "extension = xdebug.so" >> ~/.phpenv/versions/$(phpenv version-name)/etc/php.ini
+ - composer install --no-interaction --prefer-dist
 
 script: phpunit
