@@ -11,7 +11,7 @@ if [ "$TRAVIS_REPO_SLUG" == "SAREhub/PHP_Commons" ] && [ "$TRAVIS_PULL_REQUEST" 
   git config --global user.name "travis-ci"
   git clone --quiet --branch=gh-pages https://${GH_TOKEN}@github.com/SAREhub/PHP_Commons > /dev/null
 
-  cd gh-pages
+  cd PHP_Commons
 
   git rm -rf ./docs/$TRAVIS_BRANCH
 
