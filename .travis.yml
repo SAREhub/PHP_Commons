@@ -12,12 +12,12 @@ cache:
 install:
 - mv /home/travis/.phpenv/versions/$(phpenv version-name)/etc/conf.d/xdebug.ini ~/xdebug.ini
 before_script:
-- composer install --no-interaction --prefer-dist --no-progress
+- composer install --no-interaction --prefer-dist --no-progress --quiet
 - mkdir -p build/docs
 - mv ~/xdebug.ini /home/travis/.phpenv/versions/$(phpenv version-name)/etc/conf.d/xdebug.ini
 script:
 - phpunit --coverage-clover build/logs/clover.xml
-- vendor/bin/phpdoc -d ./src -t ./build/docs
+- vendor/bin/phpdoc --quiet -d ./src -t ./build/docs
 after_script:
 
 - vendor/bin/test-reporter
