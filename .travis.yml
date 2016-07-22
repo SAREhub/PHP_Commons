@@ -1,30 +1,30 @@
 sudo: false
 language: php
 php:
- - 5.6
- - 7.0
-
+- 5.6
+- 7.0
 branches:
   only:
-    - master
-
+  - master
 cache:
- directories:
-  - $HOME/.composer/cache/files
-
+  directories:
+  - "$HOME/.composer/cache/files"
 install:
- - mv /home/travis/.phpenv/versions/$(phpenv version-name)/etc/conf.d/xdebug.ini ~/xdebug.ini
-
+- mv /home/travis/.phpenv/versions/$(phpenv version-name)/etc/conf.d/xdebug.ini ~/xdebug.ini
 before_script:
- - composer install --no-interaction --prefer-dist
- - mv ~/xdebug.ini /home/travis/.phpenv/versions/$(phpenv version-name)/etc/conf.d/xdebug.ini
-
+- composer install --no-interaction --prefer-dist
+- mkdir -p build/docs
+- mv ~/xdebug.ini /home/travis/.phpenv/versions/$(phpenv version-name)/etc/conf.d/xdebug.ini
 script:
- - phpunit --coverage-clover build/logs/clover.xml
-
+- phpunit --coverage-clover build/logs/clover.xml
+- vendor/bin/phpdoc.php -d ./src -t ./build/docs
 after_script:
- - vendor/bin/test-reporter
-
+- vendor/bin/test-reporter
+after_success:
+- bash .travis_after_success.sh
 addons:
- code_climate:
-  repo_token: $CODECLIMATE_TOKEN
+  code_climate:
+    repo_token: "$CODECLIMATE_TOKEN"
+env:
+  global:
+    secure: x2KbpjV+N+K1FduR3ibUfj+Q2LLlbu9CWlaGaIMMfHJnPvYCZF2vPq+P7HTS+t32J3kQxdYYgN98+kyAD2Y5c4Yvg0rImV9JU23ILB7wgrfa+X9f1IsIHPg3F1gE8mfXasT5snVtXGoYmNCHnHkpSQ+cekwpNeVxH0pVsdzAORQgwBTZh+3dwtdfyWRrn1kYAslB+J9a7F7gANfrxVPx7lv8LnCtDzqu0pC+YL1mXBIC6zazXTyDyDn4GdmPZwt2miqUfdgZjh/GXqOkl8Si/KFRb3RMP8pOuccCdI9VhUxgR6a62bEJqUSLWK1TUmmy9tAigzk5R7V5aY71yK07y+r3I1rLcA8W1UK8LbjfCvSCi5zsYpXk7N0w+gHVssl1zJAPZTzzNzCjsPDemz+wMx05y+6lMn9nsZmjKKkNuUBm4Jv9PWMj4sEPeI7yBFx3Wh6AxRHthOz3A9rUjuj9ZBn3FJoTDWW+c+8RF+ew5M9Xkd4cky7pmOtHhZXuaVjzKW2KDzWUbjTUgekrrPAIttVZVa1XoNln4hrQR3S+gZQb9dQDvNVq/DDnlWswvL7f6gxwLLg+WC2XCXLEe3g1Cvz4GwbSJ1Elyucl5+SOHCxBAKdzmZlUEHzm8zZKhZbtcwCQoYYHUBPSj2qpliFGQszf8armYqpd6pcOwX4SEA0=
