@@ -10,7 +10,7 @@ engines:
   enabled: true
   config:
    file_extensions: "php"
-   rulesets: "unusedcode,codesize,naming,controversial,design,cleancode,phpmd-ruleset.xml"
+   rulesets: "unusedcode,codesize,controversial,design,cleancode,phpmd-ruleset.xml"
 ratings:
  paths:
  - "**.inc"
