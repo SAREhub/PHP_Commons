@@ -6,7 +6,8 @@
     <description>SAREhub PHPMD custom ruleset</description>
 
     <rule ref="rulesets/naming.xml">
-
+        <exclude name="ShortVariable"/>
+        <exclude name="LongVariable"/>
     </rule>
 
     <rule ref="rulesets/naming.xml/ShortVariable">
@@ -17,7 +18,7 @@
 
     <rule ref="rulesets/naming.xml/LongVariable">
         <properties>
-            <property name="maximum" value="4"/>
+            <property name="maximum" value="35"/>
         </properties>
     </rule>
 </ruleset>
