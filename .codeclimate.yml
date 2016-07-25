@@ -1,20 +1,19 @@
----
 engines:
-  duplication:
-    enabled: true
-    config:
-      languages:
-      - php
-  fixme:
-    enabled: true
-  phpmd:
-    enabled: true
-    config:
-    file_extensions: "php"
-     rulesets: "unusedcode,codesize,naming,controversial,design,cleancode,phpmd-ruleset.xml"
+ duplication:
+  enabled: true
+  config:
+   languages:
+   - php
+ fixme:
+  enabled: true
+ phpmd:
+  enabled: true
+  config:
+   file_extensions: "php"
+   rulesets: "unusedcode,codesize,naming,controversial,design,cleancode,phpmd-ruleset.xml"
 ratings:
-  paths:
-  - "**.inc"
-  - "**.php"
+ paths:
+ - "**.inc"
+ - "**.php"
 exclude_paths:
 - tests/
