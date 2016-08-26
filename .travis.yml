@@ -9,6 +9,8 @@ branches:
 cache:
   directories:
   - "$HOME/.composer/cache/files"
+before_install:
+- echo "extension = zmq.so" >> ~/.phpenv/versions/$(phpenv version-name)/etc/php.ini
 install:
 - mv /home/travis/.phpenv/versions/$(phpenv version-name)/etc/conf.d/xdebug.ini ~/xdebug.ini
 before_script:
