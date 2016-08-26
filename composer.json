@@ -16,14 +16,16 @@
     "fig-r/psr2r-sniffer": "0.3.*",
     "guzzlehttp/guzzle": "~6.0",
     "nannehuiges/jsend": "2.1.*",
-    "phpdocumentor/phpdocumentor": "2.9.*"
+    "phpdocumentor/phpdocumentor": "2.9.*",
+    "protobuf-php/protobuf": "0.1.*"
   },
   "require": {
     "php": "^5.6 || ^7.0"
   },
   "suggest": {
     "guzzlehttp/guzzle": "~6.0 Used for rest api and other http communication",
-    "nannehuiges/jsend": "2.1.* Used for rest api"
+    "nannehuiges/jsend": "2.1.* Used for rest api",
+    "protobuf-php/protobuf": "0.1.* Used for Protobuf submodule"
   },
   "autoload": {
     "psr-4": {
