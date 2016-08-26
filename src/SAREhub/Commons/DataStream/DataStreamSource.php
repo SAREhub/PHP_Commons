@@ -1,5 +1,5 @@
 <?php
-use SAREhub\Commons\DataStream\DataStreamSink;
+use SAREhub\Commons\DataStream;
 
 /**
  * Represents place where data come from like file, database or socket
