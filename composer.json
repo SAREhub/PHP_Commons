@@ -23,7 +23,8 @@
   },
   "suggest": {
     "guzzlehttp/guzzle": "~6.0 Used for rest api and other http communication",
-    "nannehuiges/jsend": "2.1.* Used for rest api"
+    "nannehuiges/jsend": "2.1.* Used for rest api",
+    "ext-zmq": "WHEN using ZMQ subpackage"
   },
   "autoload": {
     "psr-4": {
