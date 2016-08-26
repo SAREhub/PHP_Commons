@@ -2,7 +2,6 @@
   "name": "sarehub/commons",
   "description": "This project contains all common staff",
   "license": "MIT",
-  "version": "0.1.0",
   "authors": [
     {
       "name": "Andrzej Wasiak",
@@ -25,7 +24,7 @@
   "suggest": {
     "guzzlehttp/guzzle": "~6.0 Used for rest api and other http communication",
     "nannehuiges/jsend": "2.1.* Used for rest api",
-    "protobuf-php/protobuf": "0.1.* Used for Protobuf submodule"
+    "ext-zmq": "WHEN using ZMQ subpackage"
   },
   "autoload": {
     "psr-4": {
