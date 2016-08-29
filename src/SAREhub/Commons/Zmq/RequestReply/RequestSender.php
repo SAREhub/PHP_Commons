@@ -22,15 +22,30 @@ class RequestSender {
 	}
 	
 	/**
-	 * Send new request via ZMQ socket and waiting for reply.
-	 * @param string $request
-	 * @return string
+	 * Send request via ZMQ socket.
+	 * @param string $request Request payload.
+	 * @param bool $wait If true that operation would be block.
+	 * @return $this
+	 * @throws \ZMQSocketException
 	 */
-	public function sendRequest($request) {
-		$this->socket->send($request);
-		return $this->socket->recv();
+	public function sendRequest($request, $wait = true) {
+		$this->socket->send($request, ($wait)? 0 : \ZMQ::MODE_DONTWAIT);
+		return $this;
 	}
 	
+	/**
+	 * Receive reply from ZMQ socket.
+	 * @param bool $wait If true that operation would be block.
+	 * @return bool|string
+	 * @throws \ZMQSocketException
+	 */
+	public function receiveReply($wait = true) {
+		return $this->socket->recv(($wait)? 0 : \ZMQ::MODE_DONTWAIT);
+	}
+	
+	/**
+	 * @return \ZMQSocket
+	 */
 	public function getSocket() {
 		return $this->socket;
 	}
