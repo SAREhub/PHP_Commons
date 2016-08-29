@@ -3,9 +3,9 @@
 [![Code Climate](https://codeclimate.com/github/SAREhub/PHP_Commons/badges/gpa.svg)](https://codeclimate.com/github/SAREhub/PHP_Commons) 
 [![Test Coverage](https://codeclimate.com/github/SAREhub/PHP_Commons/badges/coverage.svg)](https://codeclimate.com/github/SAREhub/PHP_Commons/coverage)
 
-### What is this repository for? ###
 * This project contains common staff for PHP developers
-
+* Home Page [here](https://www.google.com)
+* PHPDOC [here](https://sarehub.github.io/PHP_Commons/docs/master)
 
 ### How do I get set up? ###
 ```
