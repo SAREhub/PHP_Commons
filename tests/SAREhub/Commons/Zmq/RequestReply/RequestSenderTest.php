@@ -13,7 +13,8 @@ class RequestSenderTest extends ZmqTestCase {
 		$socketMock->expects($this->once())->method('recv')->willReturn('reply');
 		
 		$sender = new RequestSender($socketMock);
-		$this->assertEquals('reply', $sender->sendRequest('request'));
+		$sender->sendRequest('request');
+		$this->assertEquals('reply', $sender->receiveReply());
 		
 	}
 }
