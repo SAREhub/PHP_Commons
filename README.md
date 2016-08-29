@@ -4,7 +4,7 @@
 [![Test Coverage](https://codeclimate.com/github/SAREhub/PHP_Commons/badges/coverage.svg)](https://codeclimate.com/github/SAREhub/PHP_Commons/coverage)
 
 * This project contains common staff for PHP developers
-* Home Page [here](https://www.google.com)
+* Home Page [here](https://sarehub.github.io/PHP_Commons/)
 * PHPDOC [here](https://sarehub.github.io/PHP_Commons/docs/master)
 
 ### How do I get set up? ###
