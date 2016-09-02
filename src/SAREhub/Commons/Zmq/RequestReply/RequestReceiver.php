@@ -10,26 +10,39 @@ class RequestReceiver {
 	/** @var \ZMQSocket */
 	protected $socket;
 	
+	/**
+	 * @param \ZMQSocket $socket
+	 */
 	public function __construct(\ZMQSocket $socket) {
 		$this->socket = $socket;
 	}
 	
 	/**
-	 * Getting next request from socket
+	 * @return RequestReceiverBuilder
 	 */
-	public function receiveRequest() {
-		return $this->socket->recv();
+	public static function builder() {
+		return new RequestReceiverBuilder();
 	}
 	
 	/**
-	 * Sending reply to ZMQ socket
-	 * @param string $reply
+	 * Getting next request from socket.
+	 * @param bool $wait If true call will waits for next request.
+	 * @return string
+	 * @throws \ZMQSocketException
 	 */
-	public function sendReply($reply) {
-		$this->socket->send($reply);
+	public function receiveRequest($wait = true) {
+		return $this->socket->recv(($wait ? 0 : \ZMQ::MODE_DONTWAIT));
 	}
 	
-	public static function builder() {
-		return new RequestReceiverBuilder();
+	/**
+	 * Sending reply to ZMQ socket.
+	 * @param string $reply
+	 * @param bool $wait If true call will be waits for reply send done.
+	 * @return $this
+	 * @throws \ZMQSocketException
+	 */
+	public function sendReply($reply, $wait = true) {
+		$this->socket->send($reply, ($wait ? 0 : \ZMQ::MODE_DONTWAIT));
+		return $this;
 	}
 }

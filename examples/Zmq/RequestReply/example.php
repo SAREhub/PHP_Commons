@@ -15,7 +15,7 @@ $sender = RequestSender::builder()
 
 $request = "request";
 echo "SENDING REQUEST: ".$request;
-$reply = $sender->sendRequest($request);
+$reply = $sender->sendRequest($request)->receiveReply();
 echo "\nGOT REPLY: ".$reply."\n";
 
 echo "\nOUTPUT FROM REQUEST RECEIVER: \n";
