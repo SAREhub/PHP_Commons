@@ -39,7 +39,6 @@ class ProtobufMessagesFileHeader {
 	 * @return ProtobufMessagesFileHeader
 	 */
 	public static function readFromFile(\SplFileObject $file) {
-		$file->fread(self::HEADER_CONTENTS_SIZE_INFO_BYTES);
 		$headerFormatVersion = unpack('N', $file->fread(self::HEADER_FORMAT_VERSION_BYTES))[1];
 		$headerContentsSize = unpack('N', $file->fread(self::HEADER_CONTENTS_SIZE_INFO_BYTES))[1];
 		return self::fromBinaryString($headerFormatVersion, $file->fread($headerContentsSize));
