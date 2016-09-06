@@ -10,4 +10,6 @@ use SAREhub\Commons\DataStream\DataStreamSink;
 interface DataStreamSource {
 	
 	public function pipe(DataStreamSink $sink);
+	
+	public function unpipe();
 }
