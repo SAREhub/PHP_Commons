@@ -2,39 +2,30 @@
 
 namespace SAREhub\Commons\Protobuf;
 
+use org\bovigo\vfs\vfsStream;
+use org\bovigo\vfs\vfsStreamDirectory;
 use PHPUnit\Framework\TestCase;
 use Protobuf\Stream;
 
 class FileProtbufMessageStreamSinkTest extends TestCase {
 	
-	public function testWriteFileHeader() {
-		$fileMock = $this->getMockBuilder(\SplFileObject::class)
-		  ->setConstructorArgs(['php://memory', 'w'])
-		  ->getMock();
-		
-		$fileMock->expects($this->once())->method('fwrite')->with('test');
-		
-		$fileHeaderMock = $this->getMockBuilder(ProtobufMessagesFileHeader::class)->getMock();
-		$fileHeaderMock->method('toBinaryString')->willReturn('test');
-		$fileHeaderMock->method('getMessageSizeInfoPackFormat')->willReturn('n');
-		$sink = new FileProtbufMessageStreamSink($fileMock, $fileHeaderMock);
+	/** @var vfsStreamDirectory */
+	private $root;
+	private $filename = 'test.fpe';
+	/** @var FileProtbufMessageStreamSink */
+	private $sink;
+	
+	protected function setUp() {
+		$this->root = vfsStream::setup('tmp');
+		$path = $this->root->url().'/'.$this->filename;
+		$file = new \SplFileObject($path, 'a');
+		$this->sink = new FileProtbufMessageStreamSink($file, 'N');
 	}
 	
 	public function testWrite() {
-		$fileMock = $this->getMockBuilder(\SplFileObject::class)
-		  ->setConstructorArgs(['php://memory', 'w'])
-		  ->getMock();
-		$dataStream = Stream::fromString("test");
-		
-		$fileHeaderMock = $this->getMockBuilder(ProtobufMessagesFileHeader::class)->getMock();
-		$fileHeaderMock->method('toBinaryString')->willReturn('test');
-		$fileHeaderMock->method('getMessageSizeInfoPackFormat')->willReturn('n');
-		$sink = new FileProtbufMessageStreamSink($fileMock, $fileHeaderMock);
-		
-		$fileMock->expects($this->once())
-		  ->method('fwrite')
-		  ->with(pack('n', $dataStream->getSize()).$dataStream->getContents());
-		$sink->write($dataStream);
+		$this->sink->write(Stream::fromString("test"));
+		$packedMessage = pack('N', 4).'test';
+		$this->assertEquals($packedMessage, $this->root->getChild($this->filename)->getContent());
 	}
 	
 }

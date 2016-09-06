@@ -5,6 +5,7 @@ namespace SAREhub\Commons\Protobuf;
 use Protobuf\Message;
 use Protobuf\Stream;
 use SAREhub\Commons\DataStream\DataStreamSink;
+use SAREhub\Commons\DataStream\DataStreamSource;
 
 /**
  * Class for writing Protocol Buffers messages to file.
@@ -12,23 +13,18 @@ use SAREhub\Commons\DataStream\DataStreamSink;
 class FileProtbufMessageStreamSink implements DataStreamSink {
 	
 	/** @var \SplFileObject */
-	private $file;
-	
-	/** @var ProtobufMessagesFileHeader */
-	private $fileHeader;
+	protected $file;
 	
 	/** @var string */
-	private $messageSizeInfoPackFormat;
+	protected $messageSizeInfoPackFormat;
 	
 	/**
 	 * @param \SplFileObject $file File handle for writing messages.
-	 * @param ProtobufMessagesFileHeader $fileHeader
+	 * @param string $messageSizeInfoPackFormat
 	 */
-	public function __construct(\SplFileObject $file, ProtobufMessagesFileHeader $fileHeader) {
+	public function __construct(\SplFileObject $file, $messageSizeInfoPackFormat) {
 		$this->file = $file;
-		$this->fileHeader = $fileHeader;
-		$this->file->fwrite($this->fileHeader->toBinaryString());
-		$this->messageSizeInfoPackFormat = $fileHeader->getMessageSizeInfoPackFormat();
+		$this->messageSizeInfoPackFormat = $messageSizeInfoPackFormat;
 	}
 	
 	/**
@@ -39,5 +35,11 @@ class FileProtbufMessageStreamSink implements DataStreamSink {
 		  pack($this->messageSizeInfoPackFormat, $data->getSize()).
 		  $data->getContents()
 		);
+	}
+	
+	public function onPipe(DataStreamSource $source) {
+	}
+	
+	public function onUnpipe(DataStreamSource $source) {
 	}
 }
