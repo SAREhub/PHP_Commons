@@ -39,7 +39,7 @@ class FileProtobufMessageStreamSource implements DataStreamSource {
 		$this->sink->onPipe($this);
 	}
 	
-	public function unpipe() {
+	public function unpipe(DataStreamSink $sink = null) {
 		$this->sink->onUnpipe($this);
 		$this->sink = new NullDataStreamSink();
 	}

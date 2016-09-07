@@ -11,5 +11,5 @@ interface DataStreamSource {
 	
 	public function pipe(DataStreamSink $sink);
 	
-	public function unpipe();
+	public function unpipe(DataStreamSink $sink = null);
 }
