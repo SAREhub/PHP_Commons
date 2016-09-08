@@ -3,29 +3,29 @@
 namespace SAREhub\Commons\Protobuf;
 
 use org\bovigo\vfs\vfsStream;
+use org\bovigo\vfs\vfsStreamDirectory;
 use PHPUnit\Framework\TestCase;
 use PHPUnit_Framework_MockObject_MockObject;
 use Protobuf\Stream;
-use SAREhub\Commons\DataStream\DataStreamSink;
-use SAREhub\Commons\DataStream\NullDataStreamSink;
+use SAREhub\Commons\DataPipeline\Filter;
 
-class FileProtobufMessageStreamSourceTest extends TestCase {
+class FileProtobufMessageSourceTest extends TestCase {
 	
 	/** @var vfsStreamDirectory */
 	private $root;
 	private $filename = 'test.fpe';
 	
 	/** @var PHPUnit_Framework_MockObject_MockObject */
-	private $sinkMock;
+	private $filterMock;
 	
 	/** @var PHPUnit_Framework_MockObject_MockObject */
 	private $fileHeaderMock;
 	
-	/** @var FileProtobufMessageStreamSource */
+	/** @var FileProtobufMessageSource */
 	private $source;
 	
 	public function testFlow() {
-		$this->sinkMock->expects($this->once())
+		$this->filterMock->expects($this->once())
 		  ->method('write')->with($this->callback(function (Stream $stream) {
 			  return $stream->getContents() === 'test' && $stream->getSize() === 4;
 		  }));
@@ -33,26 +33,24 @@ class FileProtobufMessageStreamSourceTest extends TestCase {
 	}
 	
 	public function testPipe() {
-		$otherSinkMock = $this->createMock(DataStreamSink::class);
-		$otherSinkMock->expects($this->once())
+		$otherFilterMock = $this->createMock(Filter::class);
+		$otherFilterMock->expects($this->once())
 		  ->method('onPipe')
 		  ->with($this->identicalTo($this->source));
 		
-		$this->sinkMock->expects($this->once())
+		$this->filterMock->expects($this->once())
 		  ->method('onUnpipe')
 		  ->with($this->identicalTo($this->source));
 		
-		$this->source->pipe($otherSinkMock);
-		$this->assertSame($otherSinkMock, $this->source->getSink());
+		$this->source->pipe($otherFilterMock);
 	}
 	
 	public function testUnpipe() {
-		$this->sinkMock->expects($this->once())
+		$this->filterMock->expects($this->once())
 		  ->method('onUnpipe')
 		  ->with($this->identicalTo($this->source));
 		
 		$this->source->unpipe();
-		$this->assertInstanceOf(NullDataStreamSink::class, $this->source->getSink());
 	}
 	
 	protected function setUp() {
@@ -62,12 +60,12 @@ class FileProtobufMessageStreamSourceTest extends TestCase {
 		$path = $this->root->url().'/'.$this->filename;
 		$file = new \SplFileObject($path, 'r');
 		
-		$this->sinkMock = $this->createMock(DataStreamSink::class);
+		$this->filterMock = $this->createMock(Filter::class);
 		
 		$this->fileHeaderMock = $this->createMock(ProtobufMessagesFileHeader::class);
 		$this->fileHeaderMock->method('getMessageSizeInfoPackFormat')->willReturn('N');
 		$this->fileHeaderMock->method('getMessageSizeInfoBytes')->willReturn(4);
-		$this->source = new FileProtobufMessageStreamSource($file, $this->fileHeaderMock);
-		$this->source->pipe($this->sinkMock);
+		$this->source = new FileProtobufMessageSource($file, $this->fileHeaderMock);
+		$this->source->pipe($this->filterMock);
 	}
 }

@@ -2,15 +2,13 @@
 
 namespace SAREhub\Commons\Protobuf;
 
-use Protobuf\Message;
 use Protobuf\Stream;
-use SAREhub\Commons\DataStream\DataStreamSink;
-use SAREhub\Commons\DataStream\DataStreamSource;
+use SAREhub\Commons\DataPipeline\DataSink;
 
 /**
  * Class for writing Protocol Buffers messages to file.
  */
-class FileProtbufMessageStreamSink implements DataStreamSink {
+class FileProtbufMessageSink extends DataSink {
 	
 	/** @var \SplFileObject */
 	protected $file;
@@ -37,9 +35,4 @@ class FileProtbufMessageStreamSink implements DataStreamSink {
 		);
 	}
 	
-	public function onPipe(DataStreamSource $source) {
-	}
-	
-	public function onUnpipe(DataStreamSource $source) {
-	}
 }
