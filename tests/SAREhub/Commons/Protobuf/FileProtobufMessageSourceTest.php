@@ -3,13 +3,14 @@
 namespace SAREhub\Commons\Protobuf;
 
 use org\bovigo\vfs\vfsStream;
+use org\bovigo\vfs\vfsStreamDirectory;
 use PHPUnit\Framework\TestCase;
 use PHPUnit_Framework_MockObject_MockObject;
 use Protobuf\Stream;
-use SAREhub\Commons\DataStream\DataStreamSink;
-use SAREhub\Commons\DataStream\NullDataStreamSink;
+use SAREhub\Commons\DataStream\DataSink;
+use SAREhub\Commons\DataStream\NullDataSink;
 
-class FileProtobufMessageStreamSourceTest extends TestCase {
+class FileProtobufMessageSourceTest extends TestCase {
 	
 	/** @var vfsStreamDirectory */
 	private $root;
@@ -21,7 +22,7 @@ class FileProtobufMessageStreamSourceTest extends TestCase {
 	/** @var PHPUnit_Framework_MockObject_MockObject */
 	private $fileHeaderMock;
 	
-	/** @var FileProtobufMessageStreamSource */
+	/** @var FileProtobufMessageSource */
 	private $source;
 	
 	public function testFlow() {
@@ -33,7 +34,7 @@ class FileProtobufMessageStreamSourceTest extends TestCase {
 	}
 	
 	public function testPipe() {
-		$otherSinkMock = $this->createMock(DataStreamSink::class);
+		$otherSinkMock = $this->createMock(DataSink::class);
 		$otherSinkMock->expects($this->once())
 		  ->method('onPipe')
 		  ->with($this->identicalTo($this->source));
@@ -52,7 +53,7 @@ class FileProtobufMessageStreamSourceTest extends TestCase {
 		  ->with($this->identicalTo($this->source));
 		
 		$this->source->unpipe();
-		$this->assertInstanceOf(NullDataStreamSink::class, $this->source->getSink());
+		$this->assertInstanceOf(NullDataSink::class, $this->source->getSink());
 	}
 	
 	protected function setUp() {
@@ -62,12 +63,12 @@ class FileProtobufMessageStreamSourceTest extends TestCase {
 		$path = $this->root->url().'/'.$this->filename;
 		$file = new \SplFileObject($path, 'r');
 		
-		$this->sinkMock = $this->createMock(DataStreamSink::class);
+		$this->sinkMock = $this->createMock(DataSink::class);
 		
 		$this->fileHeaderMock = $this->createMock(ProtobufMessagesFileHeader::class);
 		$this->fileHeaderMock->method('getMessageSizeInfoPackFormat')->willReturn('N');
 		$this->fileHeaderMock->method('getMessageSizeInfoBytes')->willReturn(4);
-		$this->source = new FileProtobufMessageStreamSource($file, $this->fileHeaderMock);
+		$this->source = new FileProtobufMessageSource($file, $this->fileHeaderMock);
 		$this->source->pipe($this->sinkMock);
 	}
 }

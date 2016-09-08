@@ -7,19 +7,19 @@ use org\bovigo\vfs\vfsStreamDirectory;
 use PHPUnit\Framework\TestCase;
 use Protobuf\Stream;
 
-class FileProtbufMessageStreamSinkTest extends TestCase {
+class FileProtbufMessageSinkTest extends TestCase {
 	
 	/** @var vfsStreamDirectory */
 	private $root;
 	private $filename = 'test.fpe';
-	/** @var FileProtbufMessageStreamSink */
+	/** @var FileProtbufMessageSink */
 	private $sink;
 	
 	protected function setUp() {
 		$this->root = vfsStream::setup('tmp');
 		$path = $this->root->url().'/'.$this->filename;
 		$file = new \SplFileObject($path, 'a');
-		$this->sink = new FileProtbufMessageStreamSink($file, 'N');
+		$this->sink = new FileProtbufMessageSink($file, 'N');
 	}
 	
 	public function testWrite() {
