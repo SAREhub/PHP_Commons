@@ -2,23 +2,62 @@
 
 namespace SAREhub\Commons\Zmq\RequestReply;
 
+use SAREhub\Commons\Misc\Dsn;
+
 /**
  * Sending request to ZMQ socket
  */
 class RequestSender {
 	
-	/** @var \ZMQSocket */
-	private $socket;
+	const WAIT = true;
+	const DONT_WAIT = false;
 	
-	public function __construct(\ZMQSocket $socket) {
-		$this->socket = $socket;
+	/**
+	 * @var Dsn
+	 */
+	protected $dsn = null;
+	
+	/**
+	 * @var \ZMQContext
+	 */
+	protected $context;
+	
+	/**
+	 * @var \ZMQSocket
+	 */
+	protected $socket = null;
+	
+	public function __construct(\ZMQContext $context) {
+		$this->context = $context;
+	}
+	
+	public static function inContext(\ZMQContext $context) {
+		return new self($context);
 	}
 	
 	/**
-	 * @return RequestSenderBuilder
+	 * @param Dsn $dsn
+	 * @return $this
 	 */
-	public static function builder() {
-		return new RequestSenderBuilder();
+	public function connect(Dsn $dsn) {
+		if ($this->isConnected()) {
+			throw new \LogicException("Can't connect when socket is connected");
+		}
+		$this->dsn = $dsn;
+		$this->getSocket()->connect((string)$dsn);
+		return $this;
+	}
+	
+	/**
+	 * @return $this
+	 */
+	public function disconnect() {
+		if ($this->isConnected()) {
+			$this->getSocket()->disconnect($this->dsn);
+			$this->dsn = null;
+		}
+		
+		return $this;
 	}
 	
 	/**
@@ -28,8 +67,8 @@ class RequestSender {
 	 * @return $this
 	 * @throws \ZMQSocketException
 	 */
-	public function sendRequest($request, $wait = true) {
-		$this->socket->send($request, ($wait)? 0 : \ZMQ::MODE_DONTWAIT);
+	public function sendRequest($request, $wait = self::WAIT) {
+		$this->getSocket()->send($request, ($wait) ? 0 : \ZMQ::MODE_DONTWAIT);
 		return $this;
 	}
 	
@@ -39,14 +78,39 @@ class RequestSender {
 	 * @return bool|string
 	 * @throws \ZMQSocketException
 	 */
-	public function receiveReply($wait = true) {
-		return $this->socket->recv(($wait)? 0 : \ZMQ::MODE_DONTWAIT);
+	public function receiveReply($wait = self::WAIT) {
+		return $this->getSocket()->recv(($wait) ? 0 : \ZMQ::MODE_DONTWAIT);
+	}
+	
+	/**
+	 * @return bool
+	 */
+	public function isConnected() {
+		return $this->getDsn() !== null;
+	}
+	
+	/**
+	 * @return Dsn
+	 */
+	public function getDsn() {
+		return $this->dsn;
 	}
 	
 	/**
 	 * @return \ZMQSocket
 	 */
 	public function getSocket() {
+		if ($this->socket === null) {
+			$this->socket = $this->context->getSocket(\ZMQ::SOCKET_REQ, null, null);
+		}
+		
 		return $this->socket;
+	}
+	
+	/**
+	 * @return \ZMQContext
+	 */
+	public function getContext() {
+		return $this->context;
 	}
 }

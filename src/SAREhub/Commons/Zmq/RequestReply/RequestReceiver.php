@@ -2,26 +2,72 @@
 
 namespace SAREhub\Commons\Zmq\RequestReply;
 
+use SAREhub\Commons\Misc\Dsn;
+
 /**
  * Receiving request from ZMQ and sending reply for that.
  */
 class RequestReceiver {
 	
-	/** @var \ZMQSocket */
-	protected $socket;
+	const WAIT = true;
+	const DONT_WAIT = false;
 	
 	/**
-	 * @param \ZMQSocket $socket
+	 * @var Dsn
 	 */
-	public function __construct(\ZMQSocket $socket) {
-		$this->socket = $socket;
+	protected $dsn = null;
+	
+	/**
+	 * @var \ZMQContext
+	 */
+	protected $context;
+	
+	/**
+	 * @var \ZMQSocket
+	 */
+	protected $socket = null;
+	
+	/**
+	 * @param \ZMQContext $context
+	 */
+	public function __construct(\ZMQContext $context) {
+		$this->context = $context;
 	}
 	
 	/**
-	 * @return RequestReceiverBuilder
+	 * @param \ZMQContext $context
+	 * @return RequestReceiver
 	 */
-	public static function builder() {
-		return new RequestReceiverBuilder();
+	public static function inContext(\ZMQContext $context) {
+		return new self($context);
+	}
+	
+	/**
+	 * Binds socket to $dsn
+	 * @param Dsn $dsn
+	 * @return $this
+	 * @throws \LogicException When binding second time.
+	 */
+	public function bind(Dsn $dsn) {
+		if ($this->isBinded()) {
+			throw new \LogicException("Can't bind to binded socket");
+		}
+		$this->dsn = $dsn;
+		$this->getSocket()->bind((string)$dsn);
+		return $this;
+	}
+	
+	/**
+	 * Unbinds socket from current binded dsn
+	 * @return $this
+	 */
+	public function unbind() {
+		if ($this->isBinded()) {
+			$this->getSocket()->unbind($this->dsn);
+			$this->dsn = null;
+		}
+		
+		return $this;
 	}
 	
 	/**
@@ -30,8 +76,8 @@ class RequestReceiver {
 	 * @return string
 	 * @throws \ZMQSocketException
 	 */
-	public function receiveRequest($wait = true) {
-		return $this->socket->recv(($wait ? 0 : \ZMQ::MODE_DONTWAIT));
+	public function receiveRequest($wait = self::WAIT) {
+		return $this->getSocket()->recv(($wait ? 0 : \ZMQ::MODE_DONTWAIT));
 	}
 	
 	/**
@@ -41,8 +87,41 @@ class RequestReceiver {
 	 * @return $this
 	 * @throws \ZMQSocketException
 	 */
-	public function sendReply($reply, $wait = true) {
-		$this->socket->send($reply, ($wait ? 0 : \ZMQ::MODE_DONTWAIT));
+	public function sendReply($reply, $wait = self::WAIT) {
+		$this->getSocket()->send($reply, ($wait ? 0 : \ZMQ::MODE_DONTWAIT));
 		return $this;
 	}
+	
+	/**
+	 * @return bool
+	 */
+	public function isBinded() {
+		return $this->getDsn() !== null;
+	}
+	
+	/**
+	 * @return Dsn Current binded dsn
+	 */
+	public function getDsn() {
+		return $this->dsn;
+	}
+	
+	/**
+	 * @return \ZMQSocket
+	 */
+	public function getSocket() {
+		if ($this->socket === null) {
+			$this->socket = $this->context->getSocket(\ZMQ::SOCKET_REP, null, null);
+		}
+		
+		return $this->socket;
+	}
+	
+	/**
+	 * @return \ZMQContext
+	 */
+	public function getContext() {
+		return $this->context;
+	}
+	
 }
