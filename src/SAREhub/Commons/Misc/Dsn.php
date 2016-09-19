@@ -5,39 +5,36 @@ namespace SAREhub\Commons\Misc;
 /**
  * Helper builder for DSN string format: <transport>://endpoint
  */
-class DsnBuilder {
+class Dsn {
 	
 	/** @var string */
-	private $transportType;
+	private $transport;
 	
 	/** @var string */
 	private $endpoint;
 	
 	/**
 	 * Sets INPROC transport type
-	 * @return DsnBuilder
+	 * @return Dsn
 	 */
 	public static function inproc() {
-		$builder = new self();
-		return $builder->transport('inproc');
+		return (new self())->transport('inproc');
 	}
 	
 	/**
 	 * Sets IPC transport type
-	 * @return DsnBuilder
+	 * @return Dsn
 	 */
 	public static function ipc() {
-		$builder = new self();
-		return $builder->transport('ipc');
+		return (new self())->transport('ipc');
 	}
 	
 	/**
 	 * Sets TCP transport type
-	 * @return DsnBuilder
+	 * @return Dsn
 	 */
 	public static function tcp() {
-		$builder = new self();
-		return $builder->transport('tcp');
+		return (new self())->transport('tcp');
 	}
 	
 	/**
@@ -46,8 +43,15 @@ class DsnBuilder {
 	 * @return $this
 	 */
 	public function transport($type) {
-		$this->transportType = $type;
+		$this->transport = $type;
 		return $this;
+	}
+	
+	/**
+	 * @return string
+	 */
+	public function getTransport() {
+		return $this->transport;
 	}
 	
 	/**
@@ -61,10 +65,17 @@ class DsnBuilder {
 	}
 	
 	/**
+	 * @return string
+	 */
+	public function getEndpoint() {
+		return $this->endpoint;
+	}
+	
+	/**
 	 * Returns string in DSN format <transport>://endpoint
 	 * @return string
 	 */
 	public function __toString() {
-		return $this->transportType.'://'.$this->endpoint;
+		return $this->transport.'://'.$this->endpoint;
 	}
 }
