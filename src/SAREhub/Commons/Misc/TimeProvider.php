@@ -8,6 +8,9 @@ namespace SAREhub\Commons\Misc;
  */
 class TimeProvider {
 	
+	/**
+	 * @var int|null
+	 */
 	protected $frozenTime = null;
 	
 	private static $instance = null;
