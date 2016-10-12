@@ -41,8 +41,7 @@ class Publisher {
 			throw new \LogicException("Can't publish message on unbined socket");
 		}
 		$mode = ($wait) ? 0 : \ZMQ::MODE_DONTWAIT;
-		$this->getSocket()->send($topic, \ZMQ::MODE_SNDMORE | $mode);
-		$this->getSocket()->send($message, $mode);
+		$this->getSocket()->sendmulti([$topic, $message], $mode);
 	}
 	
 	/**

@@ -75,21 +75,15 @@ class PublisherTest extends TestCase {
 	
 	public function testPublishWhenBindedThenSocketSend() {
 		$this->publisher->bind($this->dsn);
-		$this->socketMock->expects($this->atLeast(2))->method('send')
-		  ->withConsecutive(
-			['topic', ZMQ::MODE_SNDMORE | ZMQ::MODE_DONTWAIT],
-			['message', ZMQ::MODE_DONTWAIT]
-		  );
+		$this->socketMock->expects($this->once())->method('sendmulti')
+		  ->with(['topic', 'message'], ZMQ::MODE_DONTWAIT);
 		$this->publisher->publish("topic", "message");
 	}
 	
 	public function testPublishWhenWaitModeThenSocketSendWait() {
 		$this->publisher->bind($this->dsn);
-		$this->socketMock->expects($this->atLeast(2))->method('send')
-		  ->withConsecutive(
-			['topic', ZMQ::MODE_SNDMORE],
-			['message', 0]
-		  );
+		$this->socketMock->expects($this->once())->method('sendmulti')
+		  ->with(['topic', 'message'], 0);
 		$this->publisher->publish("topic", "message", true);
 	}
 	
