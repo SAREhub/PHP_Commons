@@ -83,39 +83,27 @@ class SubscriberTest extends TestCase {
 	
 	public function testReceiveWhenConnectedThenSocketCallReceiveInNonBlocking() {
 		$this->subscriber->connect($this->dsn);
-		$this->socketMock->expects($this->atLeast(2))->method('recv')
-		  ->withConsecutive(
-			[ZMQ::MODE_SNDMORE | ZMQ::MODE_DONTWAIT],
-			[ZMQ::MODE_DONTWAIT]
-		  )->willReturn("topic");
+		$this->socketMock->expects($this->once())->method('recvmulti')
+		  ->with(ZMQ::MODE_DONTWAIT)->willReturn("topic");
 		$this->subscriber->receive();
 	}
 	
 	public function testReceiveWhenConnectedAndMessageThenReturnMessage() {
 		$this->subscriber->connect($this->dsn);
-		$this->socketMock->method('recv')->willReturnOnConsecutiveCalls("topic1", "message");
+		$this->socketMock->method('recvmulti')->willReturn(["topic1", "message"]);
 		$this->assertEquals(['topic' => "topic1", 'body' => "message"], $this->subscriber->receive());
-	}
-	
-	public function testReceiveWhenConnectedAndNoMessageThenSocketCallReceiveOnce() {
-		$this->subscriber->connect($this->dsn);
-		$this->socketMock->expects($this->once())->method('recv')->willReturn(false);
-		$this->assertNull($this->subscriber->receive());
 	}
 	
 	public function testReceiveWhenConnectedAndNoMessageThenReturnNull() {
 		$this->subscriber->connect($this->dsn);
-		$this->socketMock->method('recv')->willReturn(false);
+		$this->socketMock->expects($this->once())->method('recvmulti')->willReturn(false);
 		$this->assertNull($this->subscriber->receive());
 	}
 	
 	public function testReceiveWhenConnectedAndWaitModeThenSocketCallReceiveBlocking() {
 		$this->subscriber->connect($this->dsn);
-		$this->socketMock->expects($this->atLeast(2))->method('recv')
-		  ->withConsecutive(
-			[ZMQ::MODE_SNDMORE],
-			[0]
-		  )->willReturn("topic");
+		$this->socketMock->expects($this->once())->method('recvmulti')
+		  ->with(0)->willReturn(false);
 		$this->subscriber->receive(true);
 	}
 	

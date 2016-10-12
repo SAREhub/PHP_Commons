@@ -44,10 +44,10 @@ class Subscriber {
 	public function receive($wait = false) {
 		if ($this->isConnected()) {
 			$mode = ($wait) ? 0 : \ZMQ::MODE_DONTWAIT;
-			$topic = $this->socket->recv(\ZMQ::MODE_SNDMORE | $mode);
-			if ($topic) {
-				$message = $this->socket->recv($mode);
-				return ['topic' => $topic, 'body' => $message];
+			$parts = $this->getSocket()->recvMulti($mode);
+			
+			if ($parts) {
+				return ['topic' => $parts[0], 'body' => $parts[1]];
 			}
 			
 			return null;
