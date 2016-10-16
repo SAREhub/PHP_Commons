@@ -2,21 +2,14 @@
 
 use SAREhub\Commons\Misc\Dsn;
 use SAREhub\Commons\Zmq\PublishSubscribe\Publisher;
-use SAREhub\Commons\Zmq\RequestReply\RequestSender;
 
-echo "Zmq.PublishSubscribe example\n";
-
-function logMessage($message) {
-	echo date('[H:i:s] ').$message."\n";
-}
+echo "zmq.publish_subscribe example 1 \n";
 
 $publisher = Publisher::inContext(new ZMQContext())->bind(Dsn::tcp()->endpoint('127.0.0.1:10000'));
 logMessage("Connected");
 logMessage("start subscriber");
 
-$p = proc_open('php '.__DIR__.'/subscriber.php', [
-  1 => array("pipe", "w")
-], $pipes);
+$p = runProcess(__DIR__ . '/subscriber.php', $pipes);
 
 logMessage("started subscriber");
 sleep(2);
