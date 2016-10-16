@@ -2,39 +2,28 @@
 
 namespace SAREhub\Commons\Zmq\PublishSubscribe;
 
-use SAREhub\Commons\Misc\Dsn;
+use SAREhub\Commons\Zmq\ZmqSocketBase;
 
 /**
  * Represents subscriber ZMQ socket
  */
-class Subscriber {
-	
-	/**
-	 * @var Dsn
-	 */
-	private $dsn = null;
+class Subscriber extends ZmqSocketBase {
 	
 	/**
 	 * @var array
 	 */
 	private $topics = [];
-	
-	/**
-	 * @var \ZMQSocket
-	 */
-	private $socket;
-	
-	public function __construct(\ZMQContext $context) {
-		$this->socket = $context->getSocket(\ZMQ::SOCKET_SUB, null, null);
+
+    public function __construct(\ZMQSocket $socket) {
+        parent::__construct($socket);
 	}
-	
-	
+
 	/**
 	 * @param \ZMQContext $context
 	 * @return Subscriber
 	 */
 	public static function inContext(\ZMQContext $context) {
-		return new self($context);
+        return new self($context->getSocket(\ZMQ::SOCKET_SUB, null, null));
 	}
 	
 	/**
@@ -42,7 +31,7 @@ class Subscriber {
 	 * @return null|array
 	 */
 	public function receive($wait = false) {
-		if ($this->isConnected()) {
+        if ($this->isBindedOrConnected()) {
 			$mode = ($wait) ? 0 : \ZMQ::MODE_DONTWAIT;
 			$parts = $this->getSocket()->recvMulti($mode);
 			
@@ -52,27 +41,11 @@ class Subscriber {
 			
 			return null;
 		}
-		
-		throw new \LogicException("Can't receive message when socket isn't connect");
+
+        throw new \LogicException("Can't receive message when socket isn't connected or binded");
 	}
-	
-	/**
-	 * @param Dsn $dsn
-	 * @return $this
-	 */
-	public function connect(Dsn $dsn) {
-		if ($this->isConnected()) {
-			throw new \LogicException("Can't connect on connected socket");
-		}
-		
-		$this->getSocket()->connect((string)$dsn);
-		
-		$this->dsn = $dsn;
-		
-		return $this;
-	}
-	
-	/**
+
+    /**
 	 * @param $topic
 	 * @return $this
 	 */
@@ -107,37 +80,5 @@ class Subscriber {
 	 */
 	public function getTopics() {
 		return array_keys($this->topics);
-	}
-	
-	
-	/**
-	 *
-	 */
-	public function disconnect() {
-		if ($this->isConnected()) {
-			$this->getSocket()->disconnect((string)$this->dsn);
-			$this->dsn = null;
-		}
-	}
-	
-	/**
-	 * @return bool
-	 */
-	public function isConnected() {
-		return $this->getDsn() !== null;
-	}
-	
-	/**
-	 * @return \ZMQSocket
-	 */
-	public function getSocket() {
-		return $this->socket;
-	}
-	
-	/**
-	 * @return Dsn
-	 */
-	public function getDsn() {
-		return $this->dsn;
 	}
 }

@@ -41,7 +41,7 @@ class PublisherTest extends TestCase {
 	}
 
 	public function testPublishWhenConnectedThenSocketSend() {
-	    $this->publisher->connectTo($this->dsn);
+		$this->publisher->connect($this->dsn);
         $this->socketMock->expects($this->once())->method('sendmulti')
             ->with(['topic', 'message'], ZMQ::MODE_DONTWAIT);
         $this->publisher->publish("topic", "message");
