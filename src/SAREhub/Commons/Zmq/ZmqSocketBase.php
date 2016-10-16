@@ -65,7 +65,7 @@ abstract class ZmqSocketBase {
 	 * @param Dsn $dsn
 	 * @return $this
 	 */
-	public function connectTo(Dsn $dsn) {
+	public function connect(Dsn $dsn) {
 		if (!$this->isConnectedTo($dsn)) {
 			$this->getSocket()->connect((string)$dsn);
 			$this->connections[(string)$dsn] = $dsn;
@@ -78,7 +78,7 @@ abstract class ZmqSocketBase {
 	 * @param Dsn $dsn
 	 * @return $this
 	 */
-	public function disconnectFrom(Dsn $dsn) {
+	public function disconnect(Dsn $dsn) {
 		if ($this->isConnectedTo($dsn)) {
 			$this->getSocket()->disconnect((string)$dsn);
 			unset($this->connections[(string)$dsn]);
@@ -90,9 +90,9 @@ abstract class ZmqSocketBase {
 	/**
 	 * @return $this
 	 */
-	public function disconnectFromAll() {
+	public function disconnectAll() {
 		foreach ($this->getConnections() as $connection) {
-			$this->disconnectFrom($connection);
+			$this->disconnect($connection);
 		}
 
 		return $this;

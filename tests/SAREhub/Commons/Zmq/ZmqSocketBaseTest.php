@@ -63,15 +63,15 @@ class ZmqSocketBaseTest extends PHPUnit_Framework_TestCase {
 		$this->assertFalse($this->base->isBinded());
 	}
 
-	public function testConnectToThenSocketConnect() {
+	public function testConnectThenSocketConnect() {
 		$this->socket->expects($this->once())->method('connect')->with((string)$this->dsn);
-		$this->base->connectTo($this->dsn);
+		$this->base->connect($this->dsn);
 	}
 
-	public function testConnectToWhenConnectedThenNoop() {
-		$this->base->connectTo($this->dsn);
+	public function testConnectWhenConnectedThenNoop() {
+		$this->base->connect($this->dsn);
 		$this->socket->expects($this->never())->method('connect');
-		$this->base->connectTo($this->dsn);
+		$this->base->connect($this->dsn);
 	}
 
 	public function testIsConnectedToAnyWhenNotConnectedThenReturnFalse() {
@@ -79,7 +79,7 @@ class ZmqSocketBaseTest extends PHPUnit_Framework_TestCase {
 	}
 
 	public function testIsConnectedToAnyWhenConnectedThenReturnTrue() {
-		$this->base->connectTo($this->dsn);
+		$this->base->connect($this->dsn);
 		$this->assertTrue($this->base->isConnectedToAny());
 	}
 
@@ -88,44 +88,44 @@ class ZmqSocketBaseTest extends PHPUnit_Framework_TestCase {
 	}
 
 	public function testIsConnectedToWhenConnectedThenReturnTrue() {
-		$this->base->connectTo($this->dsn);
+		$this->base->connect($this->dsn);
 		$this->assertTrue($this->base->isConnectedTo($this->dsn));
 	}
 
 	public function testDisconnectFromWhenConnectedThenSocketDisconnect() {
 		$this->socket->expects($this->once())->method('disconnect')->with((string)$this->dsn);
-		$this->base->connectTo($this->dsn);
-		$this->base->disconnectFrom($this->dsn);
+		$this->base->connect($this->dsn);
+		$this->base->disconnect($this->dsn);
 	}
 
 	public function testDisconnectFromWhenNotConnectedThenNoop() {
 		$this->socket->expects($this->never())->method('disconnect');
-		$this->base->disconnectFrom($this->dsn);
+		$this->base->disconnect($this->dsn);
 	}
 
 	public function testIsConnectedToWhenDisconnectThenReturnFalse() {
-		$this->base->connectTo($this->dsn);
-		$this->base->disconnectFrom($this->dsn);
+		$this->base->connect($this->dsn);
+		$this->base->disconnect($this->dsn);
 		$this->assertFalse($this->base->isConnectedTo($this->dsn));
 	}
 
 	public function testDisconnectFromAllWhenConnectedThenSocketDisconnect() {
-		$this->base->connectTo($this->dsn);
-		$this->base->connectTo($this->dsn2);
+		$this->base->connect($this->dsn);
+		$this->base->connect($this->dsn2);
 
 		$this->socket->expects($this->atLeast(2))->method('disconnect')->withConsecutive([(string)$this->dsn], [(string)$this->dsn2]);
-		$this->base->disconnectFromAll();
+		$this->base->disconnectAll();
 	}
 
 	public function testDisconnectFromAllWhenNotConnectedThenNoop() {
 		$this->socket->expects($this->never())->method('disconnect');
-		$this->base->disconnectFromAll();
+		$this->base->disconnectAll();
 	}
 
 	public function testIsConnectedToAnyWhenDisconnectFromAllThenReturnFalse() {
-		$this->base->connectTo($this->dsn);
-		$this->base->connectTo($this->dsn2);
-		$this->base->disconnectFromAll();
+		$this->base->connect($this->dsn);
+		$this->base->connect($this->dsn2);
+		$this->base->disconnectAll();
 		$this->assertFalse($this->base->isConnectedToAny());
 	}
 
@@ -134,7 +134,7 @@ class ZmqSocketBaseTest extends PHPUnit_Framework_TestCase {
 	}
 
 	public function testIsBindedOrConnectedWhenConnectedThenReturnTrue() {
-		$this->base->connectTo($this->dsn);
+		$this->base->connect($this->dsn);
 		$this->assertTrue($this->base->isBindedOrConnected());
 	}
 
