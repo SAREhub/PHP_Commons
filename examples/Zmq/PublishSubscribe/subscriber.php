@@ -23,8 +23,8 @@ try {
 		}
 		sleep(1);
 	}
-	
-	$subscriber->disconnect();
+
+	$subscriber->disconnectAll();
 	logMessage("Disconnected");
 } catch (Exception $e) {
 	echo $e;
