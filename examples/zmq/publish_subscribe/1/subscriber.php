@@ -3,11 +3,7 @@
 use SAREhub\Commons\Misc\Dsn;
 use SAREhub\Commons\Zmq\PublishSubscribe\Subscriber;
 
-require dirname(dirname(dirname(__DIR__))).'/vendor/autoload.php';
-
-function logMessage($message) {
-	echo date('[H:i:s] ').$message."\n";
-}
+require './ExampleCommons.php';
 
 try {
 	$subscriber = Subscriber::inContext(new ZMQContext())->connect(Dsn::tcp()->endpoint("127.0.0.1:10000"));
@@ -23,8 +19,8 @@ try {
 		}
 		sleep(1);
 	}
-	
-	$subscriber->disconnect();
+
+	$subscriber->disconnectAll();
 	logMessage("Disconnected");
 } catch (Exception $e) {
 	echo $e;

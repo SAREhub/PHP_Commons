@@ -17,6 +17,7 @@ class PublisherTest extends TestCase {
 	private $publisher;
 	
 	private $dsn;
+    private $dsn2;
 	
 	public function testCreateThenSocketTypeReturnPub() {
 		$contextMock = $this->createMock(ZMQContext::class);
@@ -26,48 +27,7 @@ class PublisherTest extends TestCase {
 		$publisher = Publisher::inContext($contextMock);
 		$this->assertSame($this->socketMock, $publisher->getSocket());
 	}
-	
-	public function testIsBindedWhenCreateThenReturnFalse() {
-		$this->assertFalse($this->publisher->isBinded());
-	}
-	
-	public function testBindWhenNotBindedThenSocketCallBind() {
-		$this->socketMock->expects($this->once())->method('bind')->with((string)$this->dsn);
-		$this->publisher->bind($this->dsn);
-	}
-	
-	public function testBindWhenBindedThenThrowException() {
-		$this->publisher->bind($this->dsn);
-		$this->expectException(LogicException::class);
-		$this->publisher->bind($this->dsn);
-	}
-	
-	public function testBindThenReturnThis() {
-		$this->assertSame($this->publisher, $this->publisher->bind($this->dsn));
-	}
-	
-	public function testIsBindWhenBindedThenReturnTrue() {
-		$this->publisher->bind($this->dsn);
-		$this->assertTrue($this->publisher->isBinded());
-	}
-	
-	public function testUnbindWhenNotBindedThenNoop() {
-		$this->socketMock->expects($this->never())->method('unbind');
-		$this->publisher->unbind();
-	}
-	
-	public function testUnbindWhenBindedThenSocketCallUnbind() {
-		$this->publisher->bind($this->dsn);
-		$this->socketMock->expects($this->once())->method('unbind')->with((string)$this->dsn);
-		$this->publisher->unbind();
-	}
-	
-	public function testUnbindWhenUnbindedThenIsBindedReturnFalse() {
-		$this->publisher->bind($this->dsn);
-		$this->publisher->unbind();
-		$this->assertFalse($this->publisher->isBinded());
-	}
-	
+
 	public function testPublishWhenNotBindedThenThrowException() {
 		$this->expectException(LogicException::class);
 		$this->publisher->publish("topic", "message");
@@ -79,6 +39,13 @@ class PublisherTest extends TestCase {
 		  ->with(['topic', 'message'], ZMQ::MODE_DONTWAIT);
 		$this->publisher->publish("topic", "message");
 	}
+
+	public function testPublishWhenConnectedThenSocketSend() {
+		$this->publisher->connect($this->dsn);
+        $this->socketMock->expects($this->once())->method('sendmulti')
+            ->with(['topic', 'message'], ZMQ::MODE_DONTWAIT);
+        $this->publisher->publish("topic", "message");
+    }
 	
 	public function testPublishWhenWaitModeThenSocketSendWait() {
 		$this->publisher->bind($this->dsn);
@@ -86,7 +53,7 @@ class PublisherTest extends TestCase {
 		  ->with(['topic', 'message'], 0);
 		$this->publisher->publish("topic", "message", true);
 	}
-	
+
 	protected function setUp() {
 		parent::setUp();
 		$contextMock = $this->createMock(ZMQContext::class);
@@ -94,6 +61,7 @@ class PublisherTest extends TestCase {
 		$contextMock->method('getSocket')->willReturn($this->socketMock);
 		$this->publisher = Publisher::inContext($contextMock);
 		
-		$this->dsn = Dsn::tcp()->endpoint('127.1.0.1');
+		$this->dsn = Dsn::tcp()->endpoint('127.1.0.1:5000');
+        $this->dsn2 = Dsn::tcp()->endpoint('127.1.0.1:5001');
 	}
 }
