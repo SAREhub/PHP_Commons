@@ -142,6 +142,18 @@ class ZmqSocketSupportTest extends PHPUnit_Framework_TestCase {
 		$this->base->bind($this->dsn);
 		$this->assertTrue($this->base->isBindedOrConnected());
 	}
+	
+	public function testCloseThenDisconnectAll() {
+		$this->base = $this->createPartialMock(TestZmqSocketSupport::class, ['disconnectAll']);
+		$this->base->expects($this->once())->method('disconnectAll');
+		$this->base->close();
+	}
+	
+	public function testCloseThenUnbind() {
+		$this->base = $this->createPartialMock(TestZmqSocketSupport::class, ['unbind']);
+		$this->base->expects($this->once())->method('unbind');
+		$this->base->close();
+	}
 
 	protected function setUp() {
 		parent::setUp();

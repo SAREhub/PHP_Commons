@@ -97,7 +97,11 @@ abstract class ZmqSocketSupport {
 
 		return $this;
 	}
-
+	
+	public function close() {
+		$this->disconnectAll();
+		$this->unbind();
+	}
 
 	/**
 	 * @return bool
