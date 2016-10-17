@@ -1,13 +1,13 @@
 <?php
 
 use SAREhub\Commons\Misc\Dsn;
-use SAREhub\Commons\Zmq\ZmqSocketBase;
+use SAREhub\Commons\Zmq\ZmqSocketSupport;
 
-class TestZmqSocketBase extends ZmqSocketBase  {
+class TestZmqSocketSupport extends ZmqSocketSupport {
 
 }
 
-class ZmqSocketBaseTest extends PHPUnit_Framework_TestCase {
+class ZmqSocketSupportTest extends PHPUnit_Framework_TestCase {
 
 	/**
 	 * @var PHPUnit_Framework_MockObject_MockObject
@@ -15,7 +15,7 @@ class ZmqSocketBaseTest extends PHPUnit_Framework_TestCase {
 	private $socket;
 
 	/**
-	 * @var ZmqSocketBase
+	 * @var ZmqSocketSupport
 	 */
 	private $base;
 
@@ -146,7 +146,7 @@ class ZmqSocketBaseTest extends PHPUnit_Framework_TestCase {
 	protected function setUp() {
 		parent::setUp();
 		$this->socket = $this->createMock(ZMQSocket::class);
-		$this->base = new TestZmqSocketBase($this->socket);
+		$this->base = new TestZmqSocketSupport($this->socket);
 
 		$this->dsn = Dsn::tcp()->endpoint('127.1.0.1:5000');
 		$this->dsn2 = Dsn::tcp()->endpoint('127.1.0.1:5001');

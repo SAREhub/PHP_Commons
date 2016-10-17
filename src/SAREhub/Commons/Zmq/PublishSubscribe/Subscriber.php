@@ -2,12 +2,12 @@
 
 namespace SAREhub\Commons\Zmq\PublishSubscribe;
 
-use SAREhub\Commons\Zmq\ZmqSocketBase;
+use SAREhub\Commons\Zmq\ZmqSocketSupport;
 
 /**
  * Represents subscriber ZMQ socket
  */
-class Subscriber extends ZmqSocketBase {
+class Subscriber extends ZmqSocketSupport {
 	
 	/**
 	 * @var array

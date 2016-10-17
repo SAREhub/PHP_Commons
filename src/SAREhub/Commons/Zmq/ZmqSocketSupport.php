@@ -5,7 +5,7 @@ namespace SAREhub\Commons\Zmq;
 
 use SAREhub\Commons\Misc\Dsn;
 
-abstract class ZmqSocketBase {
+abstract class ZmqSocketSupport {
 
 	/**
 	 * @var Dsn
