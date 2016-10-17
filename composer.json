@@ -9,7 +9,7 @@
     }
   ],
   "require-dev": {
-    "phpunit/phpunit": "5.4.*",
+    "phpunit/phpunit": "5.*",
     "codeclimate/php-test-reporter": "dev-master",
     "mikey179/vfsStream": "1.6.*",
     "fig-r/psr2r-sniffer": "0.3.*",
@@ -23,7 +23,7 @@
   "suggest": {
     "guzzlehttp/guzzle": "~6.0 Used for rest api and other http communication",
     "nannehuiges/jsend": "2.1.* Used for rest api",
-    "ext-zmq": "WHEN using ZMQ subpackage"
+    "ext-zmq": "when using ZMQ subpackage"
   },
   "autoload": {
     "psr-4": {

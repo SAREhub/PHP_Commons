@@ -2,12 +2,12 @@
 
 namespace SAREhub\Commons\Zmq\PublishSubscribe;
 
-use SAREhub\Commons\Zmq\ZmqSocketBase;
+use SAREhub\Commons\Zmq\ZmqSocketSupport;
 
 /**
  * Represents publisher ZMQ socket
  */
-class Publisher extends ZmqSocketBase {
+class Publisher extends ZmqSocketSupport {
 	
 	public function __construct(\ZMQSocket $socket) {
 		parent::__construct($socket);

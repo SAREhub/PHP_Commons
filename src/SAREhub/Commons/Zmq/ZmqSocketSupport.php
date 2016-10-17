@@ -5,7 +5,7 @@ namespace SAREhub\Commons\Zmq;
 
 use SAREhub\Commons\Misc\Dsn;
 
-abstract class ZmqSocketBase {
+abstract class ZmqSocketSupport {
 
 	/**
 	 * @var Dsn
@@ -97,7 +97,11 @@ abstract class ZmqSocketBase {
 
 		return $this;
 	}
-
+	
+	public function close() {
+		$this->disconnectAll();
+		$this->unbind();
+	}
 
 	/**
 	 * @return bool
