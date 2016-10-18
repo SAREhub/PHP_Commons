@@ -2,6 +2,20 @@
 
 namespace SAREhub\Commons\Process;
 
+if (PcntlSignals::isSupported()) {
+	define('PcntlSignals_SIGHUP', \SIGHUP);
+	define('PcntlSignals_SIGINT', \SIGINT);
+	define('PcntlSignals_SIGTERM', \SIGTERM);
+	define('PcntlSignals_SIGPIPE', \SIGPIPE);
+	define('PcntlSignals_SIGUSR1', \SIGUSR1);
+} else {
+	define('PcntlSignals_SIGHUP', 1);
+	define('PcntlSignals_SIGINT', 2);
+	define('PcntlSignals_SIGTERM', 15);
+	define('PcntlSignals_SIGPIPE', 13);
+	define('PcntlSignals_SIGUSR1', 10);
+}
+
 /**
  * Helper class for handling linux signals.
  * Installed signals:
@@ -12,6 +26,12 @@ namespace SAREhub\Commons\Process;
  * SIGUSR1
  */
 class PcntlSignals {
+	
+	const SIGHUP = PcntlSignals_SIGHUP;
+	const SIGINT = PcntlSignals_SIGINT;
+	const SIGTERM = PcntlSignals_SIGTERM;
+	const SIGPIPE = PcntlSignals_SIGPIPE;
+	const SIGUSR1 = PcntlSignals_SIGUSR1;
 	
 	const DEFAULT_NAMESPACE = 'default';
 	
@@ -38,15 +58,17 @@ class PcntlSignals {
 	 * Installs pcntl signals.
 	 */
 	public function install() {
-		$handler = function ($signal) {
-			$this->dispatchSignal($signal);
-		};
-		
-		\pcntl_signal(\SIGHUP, $handler);
-		\pcntl_signal(\SIGINT, $handler);
-		\pcntl_signal(\SIGTERM, $handler);
-		\pcntl_signal(\SIGPIPE, $handler);
-		\pcntl_signal(\SIGUSR1, $handler);
+		if (self::isSupported()) {
+			$handler = function ($signal) {
+				$this->dispatchSignal($signal);
+			};
+			
+			\pcntl_signal(self::SIGHUP, $handler);
+			\pcntl_signal(self::SIGINT, $handler);
+			\pcntl_signal(self::SIGTERM, $handler);
+			\pcntl_signal(self::SIGPIPE, $handler);
+			\pcntl_signal(self::SIGUSR1, $handler);
+		}
 	}
 	
 	/**
@@ -99,11 +121,19 @@ class PcntlSignals {
 		return isset($this->handlers[$signal]) ? $this->handlers[$signal] : [];
 	}
 	
-	
 	/**
 	 * Calls pcntl_signal_dispatch for process pending signals.
 	 */
-	public function checkPendingSignals() {
-		pcntl_signal_dispatch();
+	public static function checkPendingSignals() {
+		if (self::isSupported()) {
+			\pcntl_signal_dispatch();
+		}
+	}
+	
+	/**
+	 * @return bool
+	 */
+	public static function isSupported() {
+		return !defined('PHP_WINDOWS_VERSION_MAJOR');
 	}
 }
