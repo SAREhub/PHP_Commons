@@ -3,18 +3,17 @@
 namespace SAREhub\Commons\Process;
 
 if (PcntlSignals::isSupported()) {
-	echo "test";
-	define('SIGHUP', \SIGHUP);
-	define('SIGINT', \SIGINT);
-	define('SIGTERM', \SIGTERM);
-	define('SIGPIPE', \SIGPIPE);
-	define('SIGUSR1', \SIGUSR1);
+	define('PcntlSignals_SIGHUP', \SIGHUP);
+	define('PcntlSignals_SIGINT', \SIGINT);
+	define('PcntlSignals_SIGTERM', \SIGTERM);
+	define('PcntlSignals_SIGPIPE', \SIGPIPE);
+	define('PcntlSignals_SIGUSR1', \SIGUSR1);
 } else {
-	define('SIGHUP', 1);
-	define('SIGINT', 2);
-	define('SIGTERM', 15);
-	define('SIGPIPE', 13);
-	define('SIGUSR1', 10);
+	define('PcntlSignals_SIGHUP', 1);
+	define('PcntlSignals_SIGINT', 2);
+	define('PcntlSignals_SIGTERM', 15);
+	define('PcntlSignals_SIGPIPE', 13);
+	define('PcntlSignals_SIGUSR1', 10);
 }
 
 /**
@@ -28,11 +27,11 @@ if (PcntlSignals::isSupported()) {
  */
 class PcntlSignals {
 	
-	const SIGHUP = SIGHUP;
-	const SIGINT = SIGINT;
-	const SIGTERM = SIGTERM;
-	const SIGPIPE = SIGPIPE;
-	const SIGUSR1 = SIGUSR1;
+	const SIGHUP = PcntlSignals_SIGHUP;
+	const SIGINT = PcntlSignals_SIGINT;
+	const SIGTERM = PcntlSignals_SIGTERM;
+	const SIGPIPE = PcntlSignals_SIGPIPE;
+	const SIGUSR1 = PcntlSignals_SIGUSR1;
 	
 	const DEFAULT_NAMESPACE = 'default';
 	
