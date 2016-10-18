@@ -2,6 +2,21 @@
 
 namespace SAREhub\Commons\Process;
 
+if (PcntlSignals::isSupported()) {
+	echo "test";
+	define('SIGHUP', \SIGHUP);
+	define('SIGINT', \SIGINT);
+	define('SIGTERM', \SIGTERM);
+	define('SIGPIPE', \SIGPIPE);
+	define('SIGUSR1', \SIGUSR1);
+} else {
+	define('SIGHUP', 1);
+	define('SIGINT', 2);
+	define('SIGTERM', 15);
+	define('SIGPIPE', 13);
+	define('SIGUSR1', 10);
+}
+
 /**
  * Helper class for handling linux signals.
  * Installed signals:
@@ -12,6 +27,12 @@ namespace SAREhub\Commons\Process;
  * SIGUSR1
  */
 class PcntlSignals {
+	
+	const SIGHUP = SIGHUP;
+	const SIGINT = SIGINT;
+	const SIGTERM = SIGTERM;
+	const SIGPIPE = SIGPIPE;
+	const SIGUSR1 = SIGUSR1;
 	
 	const DEFAULT_NAMESPACE = 'default';
 	
@@ -38,15 +59,17 @@ class PcntlSignals {
 	 * Installs pcntl signals.
 	 */
 	public function install() {
-		$handler = function ($signal) {
-			$this->dispatchSignal($signal);
-		};
-		
-		\pcntl_signal(\SIGHUP, $handler);
-		\pcntl_signal(\SIGINT, $handler);
-		\pcntl_signal(\SIGTERM, $handler);
-		\pcntl_signal(\SIGPIPE, $handler);
-		\pcntl_signal(\SIGUSR1, $handler);
+		if (self::isSupported()) {
+			$handler = function ($signal) {
+				$this->dispatchSignal($signal);
+			};
+			
+			\pcntl_signal(self::SIGHUP, $handler);
+			\pcntl_signal(self::SIGINT, $handler);
+			\pcntl_signal(self::SIGTERM, $handler);
+			\pcntl_signal(self::SIGPIPE, $handler);
+			\pcntl_signal(self::SIGUSR1, $handler);
+		}
 	}
 	
 	/**
@@ -99,11 +122,19 @@ class PcntlSignals {
 		return isset($this->handlers[$signal]) ? $this->handlers[$signal] : [];
 	}
 	
-	
 	/**
 	 * Calls pcntl_signal_dispatch for process pending signals.
 	 */
-	public function checkPendingSignals() {
-		pcntl_signal_dispatch();
+	public static function checkPendingSignals() {
+		if (self::isSupported()) {
+			\pcntl_signal_dispatch();
+		}
+	}
+	
+	/**
+	 * @return bool
+	 */
+	public static function isSupported() {
+		return !defined('PHP_WINDOWS_VERSION_MAJOR');
 	}
 }

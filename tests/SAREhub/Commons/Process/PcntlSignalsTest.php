@@ -15,7 +15,7 @@ class PcntlSignalsTest extends TestCase {
 	
 	public function testHandle() {
 		$handlerMock = $this->createSignalHandler();
-		$this->signals->handle(2, $handlerMock);
+		$this->signals->handle(PcntlSignals::SIGINT, $handlerMock);
 		$this->assertEquals([
 		  2 => [
 			PcntlSignals::DEFAULT_NAMESPACE => [$handlerMock]
