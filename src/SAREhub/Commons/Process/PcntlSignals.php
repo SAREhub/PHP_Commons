@@ -124,7 +124,7 @@ class PcntlSignals {
 	/**
 	 * Calls pcntl_signal_dispatch for process pending signals.
 	 */
-	public static function checkPendingSignals() {
+	public function checkPendingSignals() {
 		if (self::isSupported()) {
 			\pcntl_signal_dispatch();
 		}
