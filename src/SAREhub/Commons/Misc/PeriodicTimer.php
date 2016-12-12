@@ -4,7 +4,6 @@ namespace SAREhub\Commons\Misc;
 
 /**
  * Calls callback in specified time interval(default 1 sec)
- * PeriodicTimer::every(5).call(function
  */
 class PeriodicTimer {
 	
@@ -48,6 +47,7 @@ class PeriodicTimer {
 	 * Calls callback of that timer
 	 */
 	public function callNow() {
-		($this->callback)();
+		$c = $this->callback;
+		$c();
 	}
 }
