@@ -7,9 +7,19 @@ namespace SAREhub\Commons\Misc;
  */
 class PeriodicTimer {
 	
+	/**
+	 * @var int
+	 */
 	private $interval = 1;
+	
+	/**
+	 * @var callable
+	 */
 	private $callback;
 	
+	/**
+	 * @var int
+	 */
 	private $lastCallTime = 0;
 	
 	/**
@@ -49,5 +59,19 @@ class PeriodicTimer {
 	public function callNow() {
 		$c = $this->callback;
 		$c();
+	}
+	
+	/**
+	 * @return int
+	 */
+	public function getInterval() {
+		return $this->interval;
+	}
+	
+	/**
+	 * @return callable
+	 */
+	public function getCallback() {
+		return $this->callback;
 	}
 }
