@@ -7,11 +7,17 @@ namespace SAREhub\Commons\Misc;
  */
 class Parameters implements \JsonSerializable {
 	
-	/** @var array */
+	/**
+	 * @var array
+	 */
 	private $parameters;
 	
 	public function __construct(array $parameters) {
 		$this->parameters = $parameters;
+	}
+	
+	public static function createFlatten($parameters) {
+		return new Parameters(ArrayHelper::flatten($parameters));
 	}
 	
 	/**
