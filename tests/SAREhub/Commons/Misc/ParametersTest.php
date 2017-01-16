@@ -7,6 +7,23 @@ use PHPUnit\Framework\TestCase;
 
 class ParametersTest extends TestCase {
 	
+	public function testCreateFlatten() {
+		$data = [
+		  'k1' => 'v1',
+		  'k2' => [
+			'k3' => ['k4' => 'v4'],
+			'k5' => 'v5'
+		  ]
+		];
+		
+		$expected = [
+		  'k1' => 'v1',
+		  'k2.k3.k4' => 'v4',
+		  'k2.k5' => 'v5'
+		];
+		$this->assertEquals($expected, Parameters::createFlatten($data)->getAll());
+	}
+	
 	public function testGet() {
 		$parameters = new Parameters(['param1' => 1, 'param2' => 2]);
 		$this->assertEquals(1, $parameters->get('param1'));
@@ -69,5 +86,6 @@ class ParametersTest extends TestCase {
 		$parameters = new Parameters($raw);
 		$this->assertJsonStringEqualsJsonString(json_encode(($raw)), json_encode($parameters));
 	}
+	
 	
 }
