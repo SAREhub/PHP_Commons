@@ -19,7 +19,6 @@ before_script:
 - mv ~/xdebug.ini /home/travis/.phpenv/versions/$(phpenv version-name)/etc/conf.d/xdebug.ini
 script:
 - phpunit --coverage-clover build/logs/clover.xml
-- vendor/bin/phpdoc --quiet -d ./src -t ./build/docs
 after_script:
 - vendor/bin/test-reporter
 after_success:
