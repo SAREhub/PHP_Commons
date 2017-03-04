@@ -6,8 +6,8 @@ if [ "$TRAVIS_REPO_SLUG" == "SAREhub/PHP_Commons" ] && [ $TRAVIS_BRANCH = 'maste
     wget http://www.apigen.org/apigen.phar
 
     # Generate Api
-    php apigen.phar generate -s src -d ../gh-pages/docs/master
-    cd ../gh-pages/docs/master
+    php apigen.phar generate -s src -d ../gh-pages/docs --template-theme bootstrap
+    cd ../gh-pages
 
     # Set identity
     git config --global user.email "travis@travis-ci.org"
