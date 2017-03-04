@@ -15,7 +15,7 @@ if [ "$TRAVIS_REPO_SLUG" == "SAREhub/PHP_Commons" ] && [ $TRAVIS_BRANCH = 'maste
 
     # Add branch
     git init
-    git remote add origin https://${GH_TOKEN}@github.com/<user>/<repository>.git > /dev/null
+    git remote add origin https://${GH_TOKEN}@github.com/SAREhub/PHP_Commons.git > /dev/null
     git checkout -B gh-pages
 
     # Push generated files
