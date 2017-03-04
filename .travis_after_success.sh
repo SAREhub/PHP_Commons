@@ -6,7 +6,7 @@ if [ "$TRAVIS_REPO_SLUG" == "SAREhub/PHP_Commons" ] && [ $TRAVIS_BRANCH = 'maste
     wget http://www.apigen.org/apigen.phar
 
     # Generate Api
-    php apigen.phar generate -s src -d ../gh-pages/docs --template-theme bootstrap
+    php apigen.phar generate -s src -d ../gh-pages --template-theme bootstrap
     cd ../gh-pages
 
     # Set identity
