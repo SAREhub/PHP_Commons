@@ -1,5 +1,6 @@
 <?php
 
+use PHPUnit\Framework\TestCase;
 use SAREhub\Commons\Misc\Dsn;
 use SAREhub\Commons\Zmq\ZmqSocketSupport;
 
@@ -7,7 +8,7 @@ class TestZmqSocketSupport extends ZmqSocketSupport {
 
 }
 
-class ZmqSocketSupportTest extends PHPUnit_Framework_TestCase {
+class ZmqSocketSupportTest extends TestCase {
 
 	/**
 	 * @var PHPUnit_Framework_MockObject_MockObject

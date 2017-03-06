@@ -6,4 +6,3 @@
 /.codeclimate.yml export-ignore
 /.travis_after_success.sh export-ignore
 /phpmd-ruleset.xml export-ignore
-/phpdoc.xml export-ignore
