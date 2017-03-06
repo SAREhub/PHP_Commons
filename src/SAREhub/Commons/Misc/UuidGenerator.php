@@ -1,6 +1,6 @@
 <?php
 
-namespace SAREhub\Component\Worker;
+namespace SAREhub\Commons\Misc;
 
 /**
  * Helper class for generate UUID
