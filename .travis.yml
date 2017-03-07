@@ -16,7 +16,7 @@ install:
 - mv ~/xdebug.ini /home/travis/.phpenv/versions/$(phpenv version-name)/etc/conf.d/xdebug.ini
 
 script:
-- phpunit --coverage-clover build/logs/clover.xml
+- vendor/phpunit/phpunit/phpunit --coverage-clover build/logs/clover.xml
 after_script:
 - vendor/bin/test-reporter
 after_success:
