@@ -35,39 +35,36 @@ class PcntlSignals {
 	
 	const DEFAULT_NAMESPACE = 'default';
 	
-	protected $handlers = [];
+	private $handlers = [];
 	
-	private static $instance = null;
-	
-	public function __construct() {
+	private function __construct() {
 		
 	}
 	
 	/**
+	 * @param callable|null $signalInstaller
 	 * @return PcntlSignals
 	 */
-	public static function getGlobal() {
-		if (self::$instance === null) {
-			self::$instance = new self();
+	public static function create($signalInstaller = null) {
+		$signalInstaller = $signalInstaller ? $signalInstaller : self::getDefaultSignalInstaller();
+		$instance = new PcntlSignals();
+		$signals = [self::SIGHUP, self::SIGINT, self::SIGTERM, self::SIGPIPE, self::SIGUSR1];
+		$handler = [$instance, 'dispatchSignal'];
+		foreach ($signals as $signal) {
+			$signalInstaller($signal, $handler);
 		}
-		
-		return self::$instance;
+		return $instance;
 	}
 	
-	/**
-	 * Installs pcntl signals.
-	 */
-	public function install() {
+	public static function getDefaultSignalInstaller() {
 		if (self::isSupported()) {
-			$handler = function ($signal) {
-				$this->dispatchSignal($signal);
+			return function ($signal, $handler) {
+				pcntl_signal($signal, $handler);
 			};
-			
-			\pcntl_signal(self::SIGHUP, $handler);
-			\pcntl_signal(self::SIGINT, $handler);
-			\pcntl_signal(self::SIGTERM, $handler);
-			\pcntl_signal(self::SIGPIPE, $handler);
-			\pcntl_signal(self::SIGUSR1, $handler);
+		} else {
+			return function ($signal, $handler) {
+				
+			};
 		}
 	}
 	
@@ -78,7 +75,7 @@ class PcntlSignals {
 	 * @param string $namespace
 	 * @return $this
 	 */
-	public function handle($signal, callable $handler, $namespace = self::DEFAULT_NAMESPACE) {
+	public function handle($signal, $handler, $namespace = self::DEFAULT_NAMESPACE) {
 		if (empty($this->handlers[$signal])) {
 			$this->handlers[$signal] = [];
 		}
@@ -126,7 +123,7 @@ class PcntlSignals {
 	 */
 	public function checkPendingSignals() {
 		if (self::isSupported()) {
-			\pcntl_signal_dispatch();
+			pcntl_signal_dispatch();
 		}
 	}
 	

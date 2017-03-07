@@ -4,13 +4,27 @@ namespace SAREhub\Commons\Process;
 
 use PHPUnit\Framework\TestCase;
 
+
 class PcntlSignalsTest extends TestCase {
 	
 	/** @var PcntlSignals */
 	private $signals;
 	
 	protected function setUp() {
-		$this->signals = new PcntlSignals();
+		$this->signals = PcntlSignals::create(function () { });
+	}
+	
+	public function testInstall() {
+		$installer = $this->createPartialMock(\stdClass::class, ['__invoke']);
+		$callback = [$this->signals, 'dispatchSignal'];
+		$installer->expects($this->exactly(5))->method('__invoke')->withConsecutive(
+		  [PcntlSignals::SIGHUP, $callback],
+		  [PcntlSignals::SIGINT, $callback],
+		  [PcntlSignals::SIGTERM, $callback],
+		  [PcntlSignals::SIGPIPE, $callback],
+		  [PcntlSignals::SIGUSR1, $callback]
+		);
+		$this->signals = PcntlSignals::create($installer);
 	}
 	
 	public function testHandle() {
@@ -38,12 +52,11 @@ class PcntlSignalsTest extends TestCase {
 	
 	public function testGetHandlersForSignal() {
 		$handlerMock = $this->createSignalHandler();
-		$signals = new PcntlSignals();
-		$signals->handle(2, $handlerMock);
-		$signals->handle(5, $this->createSignalHandler());
+		$this->signals->handle(2, $handlerMock);
+		$this->signals->handle(5, $this->createSignalHandler());
 		$this->assertEquals([
 		  PcntlSignals::DEFAULT_NAMESPACE => [$handlerMock]
-		], $signals->getHandlersForSignal(2));
+		], $this->signals->getHandlersForSignal(2));
 	}
 	
 	public function testDispatchSignal() {
