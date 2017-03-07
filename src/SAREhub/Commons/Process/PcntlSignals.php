@@ -37,35 +37,34 @@ class PcntlSignals {
 	
 	private $handlers = [];
 	
-	private function __construct() {
-		
-	}
-	
 	/**
-	 * @param callable|null $signalInstaller
+	 * Factory method, can install default signals.
+	 * @param bool $install When true installs signals.
 	 * @return PcntlSignals
 	 */
-	public static function create($signalInstaller = null) {
-		$signalInstaller = $signalInstaller ? $signalInstaller : self::getDefaultSignalInstaller();
+	public static function create($install = true) {
 		$instance = new PcntlSignals();
-		$signals = [self::SIGHUP, self::SIGINT, self::SIGTERM, self::SIGPIPE, self::SIGUSR1];
-		$handler = [$instance, 'dispatchSignal'];
-		foreach ($signals as $signal) {
-			$signalInstaller($signal, $handler);
+		if ($install) {
+			$instance->install(self::getDefaultInstalledSignals());
 		}
 		return $instance;
 	}
 	
-	public static function getDefaultSignalInstaller() {
+	public static function getDefaultInstalledSignals() {
+		return [self::SIGHUP, self::SIGINT, self::SIGTERM, self::SIGPIPE, self::SIGUSR1];
+	}
+	
+	/**
+	 * Installs selected signal
+	 * @param array $signals
+	 */
+	public function install(array $signals) {
 		if (self::isSupported()) {
-			return function ($signal, $handler) {
-				pcntl_signal($signal, $handler);
-			};
-		} else {
-			return function ($signal, $handler) {
-				
-			};
-		}
+			$callback = [$this, 'dispatchSignal'];
+			foreach ($signals as $signal) {
+				\pcntl_signal($signal, $callback);
+			}
+		};
 	}
 	
 	/**
@@ -114,7 +113,7 @@ class PcntlSignals {
 		return $this->handlers;
 	}
 	
-	public function getHandlersForSignal($signal) {
+	public function getHandlersForSignal($signal, $namespace = null) {
 		return isset($this->handlers[$signal]) ? $this->handlers[$signal] : [];
 	}
 	
@@ -123,7 +122,7 @@ class PcntlSignals {
 	 */
 	public function checkPendingSignals() {
 		if (self::isSupported()) {
-			pcntl_signal_dispatch();
+			\pcntl_signal_dispatch();
 		}
 	}
 	

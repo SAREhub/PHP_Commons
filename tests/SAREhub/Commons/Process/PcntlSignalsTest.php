@@ -11,30 +11,13 @@ class PcntlSignalsTest extends TestCase {
 	private $signals;
 	
 	protected function setUp() {
-		$this->signals = PcntlSignals::create(function () { });
-	}
-	
-	public function testInstall() {
-		$installer = $this->createPartialMock(\stdClass::class, ['__invoke']);
-		$callback = [$this->signals, 'dispatchSignal'];
-		$installer->expects($this->exactly(5))->method('__invoke')->withConsecutive(
-		  [PcntlSignals::SIGHUP, $callback],
-		  [PcntlSignals::SIGINT, $callback],
-		  [PcntlSignals::SIGTERM, $callback],
-		  [PcntlSignals::SIGPIPE, $callback],
-		  [PcntlSignals::SIGUSR1, $callback]
-		);
-		$this->signals = PcntlSignals::create($installer);
+		$this->signals = PcntlSignals::create(false);
 	}
 	
 	public function testHandle() {
 		$handlerMock = $this->createSignalHandler();
-		$this->signals->handle(PcntlSignals::SIGINT, $handlerMock);
-		$this->assertEquals([
-		  2 => [
-			PcntlSignals::DEFAULT_NAMESPACE => [$handlerMock]
-		  ]
-		], $this->signals->getHandlers());
+		$this->signals->handle(1, $handlerMock);
+		$this->assertEquals([1 => [PcntlSignals::DEFAULT_NAMESPACE => [$handlerMock]]], $this->signals->getHandlers());
 	}
 	
 	public function testHandleSameSignal() {
@@ -67,6 +50,6 @@ class PcntlSignalsTest extends TestCase {
 	}
 	
 	private function createSignalHandler() {
-		return $this->getMockBuilder(\stdClass::class)->setMethods(['__invoke'])->getMock();
+		return $this->createPartialMock(\stdClass::class, ['__invoke']);
 	}
 }
