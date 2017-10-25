@@ -14,7 +14,8 @@
     "mikey179/vfsStream": "1.6.*",
     "fig-r/psr2r-sniffer": "0.3.*",
     "guzzlehttp/guzzle": "~6.0",
-    "nannehuiges/jsend": "2.1.*"
+    "nannehuiges/jsend": "2.1.*",
+    "monolog/monolog": "1.*"
   },
   "require": {
     "php": "^7.0"
