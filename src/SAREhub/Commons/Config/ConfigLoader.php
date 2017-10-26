@@ -4,7 +4,8 @@
 namespace SAREhub\Commons\Config;
 
 
-interface ConfigLoader {
-	
-	public function load();
+interface ConfigLoader
+{
+
+    public function load();
 }

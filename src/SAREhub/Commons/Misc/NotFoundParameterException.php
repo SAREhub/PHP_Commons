@@ -2,6 +2,7 @@
 
 namespace SAREhub\Commons\Misc;
 
-class NotFoundParameterException extends ParameterException {
-	
+class NotFoundParameterException extends ParameterException
+{
+
 }

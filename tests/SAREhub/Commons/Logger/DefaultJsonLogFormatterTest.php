@@ -4,7 +4,8 @@ namespace SAREhub\Commons\Logger;
 
 use PHPUnit\Framework\TestCase;
 
-class DummySerializableObject implements \JsonSerializable {
+class DummySerializableObject implements \JsonSerializable
+{
 
     private $a;
 
@@ -13,7 +14,8 @@ class DummySerializableObject implements \JsonSerializable {
         $this->a = "test";
     }
 
-    public static function newInstance() {
+    public static function newInstance()
+    {
         return new self();
     }
 

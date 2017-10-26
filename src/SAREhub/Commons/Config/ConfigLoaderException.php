@@ -4,5 +4,6 @@
 namespace SAREhub\Commons\Config;
 
 
-class ConfigLoaderException extends \Exception {
+class ConfigLoaderException extends \Exception
+{
 }
