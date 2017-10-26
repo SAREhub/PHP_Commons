@@ -1,6 +1,6 @@
 #!/bin/bash
 
-if [ "$TRAVIS_REPO_SLUG" == "SAREhub/PHP_Commons" ] && [ "$TRAVIS_BRANCH" = 'master' ] && [ "$TRAVIS_PULL_REQUEST" == "false" ] && [ "$TRAVIS_PHP_VERSION" == "7.0" ]; then
+if [ "$TRAVIS_REPO_SLUG" == "SAREhub/PHP_Commons" ] && [ "$TRAVIS_BRANCH" = 'master' ] && [ "$TRAVIS_PULL_REQUEST" == "false" ] && [ "$TRAVIS_PHP_VERSION" == "7.1" ]; then
 
     mkdir ../gh-pages
     vendor/bin/apigen generate src -vv --destination ../gh-pages
