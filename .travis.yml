@@ -8,6 +8,10 @@ branches:
 cache:
   directories:
   - $HOME/.composer/cache/files
+before_install:
+- sudo apt-get update
+- |
+- sudo apt-get install -y -qq libzmq3-dev libsodium-dev
 install:
 - yes '' | pecl install zmq-beta
 - mv /home/travis/.phpenv/versions/$(phpenv version-name)/etc/conf.d/xdebug.ini ~/xdebug.ini
