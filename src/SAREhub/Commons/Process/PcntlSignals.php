@@ -2,20 +2,6 @@
 
 namespace SAREhub\Commons\Process;
 
-if (PcntlSignals::isSupported()) {
-	define('PcntlSignals_SIGHUP', \SIGHUP);
-	define('PcntlSignals_SIGINT', \SIGINT);
-	define('PcntlSignals_SIGTERM', \SIGTERM);
-	define('PcntlSignals_SIGPIPE', \SIGPIPE);
-	define('PcntlSignals_SIGUSR1', \SIGUSR1);
-} else {
-	define('PcntlSignals_SIGHUP', 1);
-	define('PcntlSignals_SIGINT', 2);
-	define('PcntlSignals_SIGTERM', 15);
-	define('PcntlSignals_SIGPIPE', 13);
-	define('PcntlSignals_SIGUSR1', 10);
-}
-
 /**
  * Helper class for handling linux signals.
  * Installed signals:
@@ -27,11 +13,11 @@ if (PcntlSignals::isSupported()) {
  */
 class PcntlSignals {
 	
-	const SIGHUP = PcntlSignals_SIGHUP;
-	const SIGINT = PcntlSignals_SIGINT;
-	const SIGTERM = PcntlSignals_SIGTERM;
-	const SIGPIPE = PcntlSignals_SIGPIPE;
-	const SIGUSR1 = PcntlSignals_SIGUSR1;
+	const SIGHUP = 1;
+	const SIGINT = 2;
+	const SIGTERM = 15;
+	const SIGPIPE = 13;
+	const SIGUSR1 = 10;
 	
 	const DEFAULT_NAMESPACE = 'default';
 	

@@ -29,7 +29,7 @@ abstract class ZmqSocketSupport {
 	/**
 	 * @param Dsn $dsn
 	 * @return $this
-	 * @throws \LogicException, \ZMQException
+	 * @throws \LogicException \ZMQException
 	 */
 	public function bind(Dsn $dsn) {
 		if ($this->isBinded()) {
