@@ -13,17 +13,18 @@ class Subscriber extends ZmqSocketSupport {
 	 * @var array
 	 */
 	private $topics = [];
-
-    public function __construct(\ZMQSocket $socket) {
-        parent::__construct($socket);
+	private $subscribeAll = false;
+	
+	public function __construct(\ZMQSocket $socket) {
+		parent::__construct($socket);
 	}
-
+	
 	/**
 	 * @param \ZMQContext $context
 	 * @return Subscriber
 	 */
 	public static function inContext(\ZMQContext $context) {
-        return new self($context->getSocket(\ZMQ::SOCKET_SUB, null, null));
+		return new self($context->getSocket(\ZMQ::SOCKET_SUB, null, null));
 	}
 	
 	/**
@@ -31,22 +32,27 @@ class Subscriber extends ZmqSocketSupport {
 	 * @return null|array
 	 */
 	public function receive($wait = false) {
-        if ($this->isBindedOrConnected()) {
+		if ($this->isBindedOrConnected()) {
 			$mode = ($wait) ? 0 : \ZMQ::MODE_DONTWAIT;
-			$parts = $this->getSocket()->recvMulti($mode);
-			
-			if ($parts) {
-				return ['topic' => $parts[0], 'body' => $parts[1]];
+			if ($parts = $this->getSocket()->recvMulti($mode)) {
+				$message = ['topic' => $parts[0], 'body' => $parts[1]];
+				if ($this->isSubscribed($message['topic'])) {
+					return $message;
+				}
 			}
 			
 			return null;
 		}
-
-        throw new \LogicException("Can't receive message when socket isn't connected or binded");
+		
+		throw new \LogicException("Can't receive message when socket isn't connected or binded");
 	}
-
-    /**
-	 * @param $topic
+	
+	public function subscribeAll() {
+		$this->subscribeAll = true;
+	}
+	
+	/**
+	 * @param string $topic
 	 * @return $this
 	 */
 	public function subscribe($topic) {
@@ -72,7 +78,7 @@ class Subscriber extends ZmqSocketSupport {
 	 * @return bool
 	 */
 	public function isSubscribed($topic) {
-		return isset($this->topics[$topic]);
+		return $this->subscribeAll || isset($this->topics[$topic]);
 	}
 	
 	/**

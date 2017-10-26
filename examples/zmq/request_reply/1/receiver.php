@@ -10,7 +10,7 @@ $receiver = RequestReceiver::inContext(new ZMQContext())
 while (1) {
 	logMessage("RECEIVER:");
 	$request = $receiver->receiveRequest();
-	logMessage("GOT REQUEST: " . $request);
+	logMessage("GOT REQUEST: ".$request);
 	$receiver->sendReply("reply");
 	logMessage("REPLY SENT");
 	break;

@@ -30,7 +30,7 @@ class Publisher extends ZmqSocketSupport {
 		if (!$this->isBindedOrConnected()) {
 			throw new \LogicException("Publishing message when not binded or connected");
 		}
-
+		
 		$mode = ($wait) ? 0 : \ZMQ::MODE_DONTWAIT;
 		$this->getSocket()->sendmulti([$topic, $message], $mode);
 	}
