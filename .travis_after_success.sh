@@ -2,11 +2,8 @@
 
 if [ "$TRAVIS_REPO_SLUG" == "SAREhub/PHP_Commons" ] && [ $TRAVIS_BRANCH = 'master' ] && [ "$TRAVIS_PULL_REQUEST" == "false" ] && [ "$TRAVIS_PHP_VERSION" == "7.0" ]; then
 
-    # Get ApiGen.phar
-    wget http://www.apigen.org/apigen.phar
-
-    # Generate Api
-    php apigen.phar generate -s src -d ../gh-pages --template-theme bootstrap
+    mkdir ../gh-pages
+    vendor/bin/apigen generate src --destination ../gh-pages --template-theme bootstrap
     cd ../gh-pages
 
     # Set identity
@@ -15,7 +12,7 @@ if [ "$TRAVIS_REPO_SLUG" == "SAREhub/PHP_Commons" ] && [ $TRAVIS_BRANCH = 'maste
 
     # Add branch
     git init
-    git remote add origin https://${GH_TOKEN}@github.com/SAREhub/PHP_Commons.git > /dev/null
+    git remote add origin https://${GH_TOKEN}@github.com/${TRAVIS_REPO_SLUG}.git > /dev/null
     git checkout -B gh-pages
 
     # Push generated files

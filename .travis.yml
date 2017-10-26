@@ -1,7 +1,6 @@
 sudo: false
 language: php
 php:
-- 7.0
 - 7.1
 branches:
   only:
@@ -10,11 +9,10 @@ cache:
   directories:
   - $HOME/.composer/cache/files
 install:
-- echo "extension = zmq.so" >> ~/.phpenv/versions/$(phpenv version-name)/etc/php.ini
+- pecl install zmq
 - mv /home/travis/.phpenv/versions/$(phpenv version-name)/etc/conf.d/xdebug.ini ~/xdebug.ini
 - composer update --prefer-dist
 - mv ~/xdebug.ini /home/travis/.phpenv/versions/$(phpenv version-name)/etc/conf.d/xdebug.ini
-
 script:
 - vendor/phpunit/phpunit/phpunit --coverage-clover build/logs/clover.xml
 after_script:
