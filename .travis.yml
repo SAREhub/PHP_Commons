@@ -9,7 +9,7 @@ cache:
   directories:
   - $HOME/.composer/cache/files
 install:
-- pecl install zmq-beta
+- yes '' | pecl install zmq-beta
 - mv /home/travis/.phpenv/versions/$(phpenv version-name)/etc/conf.d/xdebug.ini ~/xdebug.ini
 - composer update --prefer-dist
 - mv ~/xdebug.ini /home/travis/.phpenv/versions/$(phpenv version-name)/etc/conf.d/xdebug.ini
