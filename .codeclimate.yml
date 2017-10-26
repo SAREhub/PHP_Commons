@@ -1,4 +1,11 @@
 engines:
+ phpcodesniffer:
+   enabled: true
+   config:
+    file_extensions: "php"
+    standard: "PSR1,PSR2"
+    ignore_warnings: false
+    encoding: utf-8
  duplication:
   enabled: true
   config:

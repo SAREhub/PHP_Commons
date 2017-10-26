@@ -12,7 +12,7 @@
     "phpunit/phpunit": "6.*",
     "codeclimate/php-test-reporter": "dev-master",
     "mikey179/vfsStream": "1.6.*",
-    "fig-r/psr2r-sniffer": "0.3.*",
+    "apigen/apigen": "v5.0.0-RC5",
     "guzzlehttp/guzzle": "~6.0",
     "nannehuiges/jsend": "2.1.*"
   },
