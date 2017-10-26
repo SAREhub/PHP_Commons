@@ -16,7 +16,8 @@
     "phpdocumentor/reflection-docblock": "4.1.*",
     "roave/better-reflection": "dev-master#c87d856",
     "guzzlehttp/guzzle": "~6.0",
-    "nannehuiges/jsend": "2.1.*"
+    "nannehuiges/jsend": "2.1.*",
+    "monolog/monolog": "1.*"
   },
   "require": {
     "php": "^7.1"
