@@ -12,12 +12,14 @@
     "phpunit/phpunit": "6.*",
     "codeclimate/php-test-reporter": "dev-master",
     "mikey179/vfsStream": "1.6.*",
-    "apigen/apigen": "v5.0.0-RC5",
+    "apigen/apigen": "dev-master",
+    "phpdocumentor/reflection-docblock": "4.1.*",
+    "roave/better-reflection": "dev-master",
     "guzzlehttp/guzzle": "~6.0",
     "nannehuiges/jsend": "2.1.*"
   },
   "require": {
-    "php": "^7.0"
+    "php": "^7.1"
   },
   "suggest": {
     "guzzlehttp/guzzle": "~6.0 Used for rest api and other http communication",
