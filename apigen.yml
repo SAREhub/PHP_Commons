@@ -1,0 +1,4 @@
+parameters:
+    title: "SAREhub PHP Commons"
+    visibilityLevels: [public, protected]
+    baseUrl: https://sarehub.github.io/PHP_Commons/

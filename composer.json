@@ -14,7 +14,7 @@
     "mikey179/vfsStream": "1.6.*",
     "apigen/apigen": "dev-master",
     "phpdocumentor/reflection-docblock": "4.1.*",
-    "roave/better-reflection": "dev-master",
+    "roave/better-reflection": "dev-master#c87d856",
     "guzzlehttp/guzzle": "~6.0",
     "nannehuiges/jsend": "2.1.*"
   },
