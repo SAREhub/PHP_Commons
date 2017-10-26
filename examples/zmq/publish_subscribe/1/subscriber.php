@@ -19,7 +19,7 @@ try {
 		}
 		sleep(1);
 	}
-
+	
 	$subscriber->disconnectAll();
 	logMessage("Disconnected");
 } catch (Exception $e) {

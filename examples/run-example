@@ -1,40 +1,40 @@
 #!/usr/bin/env php
 <?php
 
-require __DIR__ . '/ExampleCommons.php';
+require __DIR__.'/ExampleCommons.php';
 
 class ExampleListHelper {
-
+	
 	public function printList($dir) {
 		echo "EXAMPLES:\n";
 		foreach ($this->getDirList($dir) as $path => $name) {
 			$this->printPackage($path, $name);
 		}
 	}
-
+	
 	private function printPackage($path, $name) {
-		echo "$name - " . $this->loadDescription($path) . "\n";
+		echo "$name - ".$this->loadDescription($path)."\n";
 		foreach ($this->getDirList($path) as $path => $name) {
 			$this->printTopic($path, $name);
 		}
 	}
-
+	
 	private function printTopic($path, $name) {
-		echo " $name - " . $this->loadDescription($path) . "\n";
+		echo " $name - ".$this->loadDescription($path)."\n";
 		foreach ($this->getDirList($path) as $path => $name) {
 			$this->printExample($path, $name);
 		}
 	}
-
+	
 	private function printExample($path, $name) {
-		echo "  $name - " . $this->loadDescription($path) . "\n";
+		echo "  $name - ".$this->loadDescription($path)."\n";
 	}
-
+	
 	private function loadDescription($path) {
-		$descriptionPath = $path . '/description';
+		$descriptionPath = $path.'/description';
 		return file_exists($descriptionPath) ? file_get_contents($descriptionPath) : 'empty';
 	}
-
+	
 	private function getDirList($dir) {
 		$it = new DirectoryIterator($dir);
 		$list = [];
@@ -44,7 +44,7 @@ class ExampleListHelper {
 				$list[$path->getPathname()] = $path->getBasename();
 			}
 		}
-
+		
 		return $list;
 	}
 }
@@ -56,7 +56,7 @@ if (empty($argv[1])) {
 	return;
 }
 
-$examplePath = __DIR__ . '/' . strtolower($argv[1]) . '/example.php';
+$examplePath = __DIR__.'/'.strtolower($argv[1]).'/example.php';
 
 if (file_exists($examplePath)) {
 	require $examplePath;

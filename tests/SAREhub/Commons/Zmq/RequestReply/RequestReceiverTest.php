@@ -1,6 +1,7 @@
 <?php
 
 require_once dirname(__DIR__).'/ZmqTestCase.php';
+
 use SAREhub\Commons\Zmq\RequestReply\RequestReceiver;
 use SAREhub\Commons\Zmq\ZmqTestCase;
 

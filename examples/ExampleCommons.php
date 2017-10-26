@@ -1,13 +1,13 @@
 <?php
 
-require dirname(__DIR__) . '/vendor/autoload.php';
+require dirname(__DIR__).'/vendor/autoload.php';
 
 function logMessage($message) {
-	echo date('[H:i:s] ') . $message . "\n";
+	echo date('[H:i:s] ').$message."\n";
 }
 
 function runProcess($file, &$pipes) {
-	return proc_open('php ' . $file, [1 => ["pipe", "w"]], $pipes, __DIR__);
+	return proc_open('php '.$file, [1 => ["pipe", "w"]], $pipes, __DIR__);
 }
 
 function printOutputFromProcess($label, $pipe) {

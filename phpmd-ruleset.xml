@@ -12,7 +12,7 @@
 
     <rule ref="rulesets/naming.xml/ShortVariable">
         <properties>
-            <property name="minimum" value="2"/>
+            <property name="minimum" value="1"/>
         </properties>
     </rule>
 

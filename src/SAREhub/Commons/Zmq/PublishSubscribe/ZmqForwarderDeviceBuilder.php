@@ -39,7 +39,7 @@ class ZmqForwarderDeviceBuilder {
 	
 	public function build() {
 		if (empty($this->frontend->getTopics())) {
-			$this->frontend->subscribe('');
+			$this->frontend->subscribeAll();
 		}
 		
 		$device = new \ZMQDevice($this->frontend->getSocket(), $this->backend->getSocket());

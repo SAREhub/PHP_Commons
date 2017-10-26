@@ -17,7 +17,7 @@ class PublisherTest extends TestCase {
 	private $publisher;
 	
 	private $dsn;
-    private $dsn2;
+	private $dsn2;
 	
 	public function testCreateThenSocketTypeReturnPub() {
 		$contextMock = $this->createMock(ZMQContext::class);
@@ -27,7 +27,7 @@ class PublisherTest extends TestCase {
 		$publisher = Publisher::inContext($contextMock);
 		$this->assertSame($this->socketMock, $publisher->getSocket());
 	}
-
+	
 	public function testPublishWhenNotBindedThenThrowException() {
 		$this->expectException(LogicException::class);
 		$this->publisher->publish("topic", "message");
@@ -39,13 +39,13 @@ class PublisherTest extends TestCase {
 		  ->with(['topic', 'message'], ZMQ::MODE_DONTWAIT);
 		$this->publisher->publish("topic", "message");
 	}
-
+	
 	public function testPublishWhenConnectedThenSocketSend() {
 		$this->publisher->connect($this->dsn);
-        $this->socketMock->expects($this->once())->method('sendmulti')
-            ->with(['topic', 'message'], ZMQ::MODE_DONTWAIT);
-        $this->publisher->publish("topic", "message");
-    }
+		$this->socketMock->expects($this->once())->method('sendmulti')
+		  ->with(['topic', 'message'], ZMQ::MODE_DONTWAIT);
+		$this->publisher->publish("topic", "message");
+	}
 	
 	public function testPublishWhenWaitModeThenSocketSendWait() {
 		$this->publisher->bind($this->dsn);
@@ -53,7 +53,7 @@ class PublisherTest extends TestCase {
 		  ->with(['topic', 'message'], 0);
 		$this->publisher->publish("topic", "message", true);
 	}
-
+	
 	protected function setUp() {
 		parent::setUp();
 		$contextMock = $this->createMock(ZMQContext::class);
@@ -62,6 +62,6 @@ class PublisherTest extends TestCase {
 		$this->publisher = Publisher::inContext($contextMock);
 		
 		$this->dsn = Dsn::tcp()->endpoint('127.1.0.1:5000');
-        $this->dsn2 = Dsn::tcp()->endpoint('127.1.0.1:5001');
+		$this->dsn2 = Dsn::tcp()->endpoint('127.1.0.1:5001');
 	}
 }

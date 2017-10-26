@@ -4,7 +4,6 @@ use PHPUnit\Framework\TestCase;
 use SAREhub\Commons\Zmq\PublishSubscribe\Publisher;
 use SAREhub\Commons\Zmq\PublishSubscribe\Subscriber;
 use SAREhub\Commons\Zmq\PublishSubscribe\ZmqForwarderDevice;
-use SAREhub\Commons\Zmq\PublishSubscribe\ZmqForwarderDeviceBuilder;
 
 class ZmqForwarderDeviceBuilderTest extends TestCase {
 	
@@ -27,17 +26,17 @@ class ZmqForwarderDeviceBuilderTest extends TestCase {
 		  ->build());
 	}
 	
-	public function testBuildWhenFrontendTopicNotSetsThenSetEmptyTopic() {
-		$this->frontend->expects($this->once())->method('subscribe')->with('');
+	public function testBuildWhenFrontendTopicNotSetsThenSubscribeAll() {
+		$this->frontend->expects($this->once())->method('subscribeAll');
 		$this->assertInstanceOf(ZmqForwarderDevice::class, ZmqForwarderDevice::getBuilder()
 		  ->frontend($this->frontend)
 		  ->backend($this->backend)
 		  ->build());
 	}
 	
-	public function testBuildWhenFrontendHasAnyTopicThenNotAddEmptyTopic() {
+	public function testBuildWhenFrontendHasAnyTopicThenNotSubscribeAll() {
 		$this->frontend->method('getTopics')->willReturn(['topic']);
-		$this->frontend->expects($this->never())->method('subscribe');
+		$this->frontend->expects($this->never())->method('subscribeAll');
 		$this->assertInstanceOf(ZmqForwarderDevice::class, ZmqForwarderDevice::getBuilder()
 		  ->frontend($this->frontend)
 		  ->backend($this->backend)
