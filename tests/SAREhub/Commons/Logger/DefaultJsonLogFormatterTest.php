@@ -50,7 +50,7 @@ class DefaultJsonLogFormatterTest extends TestCase
     public function testNormalizeObjectWhenImplementsJsonSerializable()
     {
         $object = DummySerializableObject::newInstance();
-        $this->assertSame($object, $this->formatter->normalizeObject($object));
+        $this->assertSame($object->jsonSerialize(), $this->formatter->normalizeObject($object));
     }
 
     public function testNormalizeObjectWhenIsThrowable()

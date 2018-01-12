@@ -41,7 +41,7 @@ class DefaultJsonLogFormatter extends JsonFormatter
     {
 
         if ($value instanceof \JsonSerializable) {
-            return $value;
+            return $value->jsonSerialize();
         }
 
         if ($value instanceof \Throwable) {
