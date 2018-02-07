@@ -7,9 +7,9 @@ use PHPUnit\Framework\TestCase;
 class SimpleSecretValueProviderTest extends TestCase
 {
 
-    public function testGetValue()
+    public function testGet()
     {
         $provider = new SimpleSecretValueProvider();
-        $this->assertEquals("test", $provider->getValue("test"));
+        $this->assertEquals("test", $provider->get("test"));
     }
 }
