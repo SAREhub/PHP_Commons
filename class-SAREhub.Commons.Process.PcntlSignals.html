@@ -1,0 +1,585 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <meta charset="utf-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+        <meta name="mobile-web-app-capable" content="yes">
+        <meta name="apple-mobile-web-app-capable" content="yes">
+
+        <link rel="stylesheet" href="resources/bootstrap.min.css">
+        <link rel="stylesheet" href="resources/style.css">
+
+        <title>
+            Class SAREhub\Commons\Process\PcntlSignals | SAREhub PHP Commons
+        </title>
+    </head>
+
+    <body>
+<div id="navigation">
+    <div class="container">
+        <div class="row">
+            <div class="col-md-12">
+                <nav class="navbar">
+                    <ul class="nav navbar-nav">
+                        <li>
+                            <a href="index.html">
+                                SAREhub PHP Commons
+                            </a>
+                        </li>
+
+                            <li>
+                                <a href="classes.html">Classes</a>
+                            </li>
+
+                            <li>
+                                <a href="interfaces.html">Interfaces</a>
+                            </li>
+
+
+
+                            <li>
+                                <a href="exceptions.html">Exceptions</a>
+                            </li>
+
+                    </ul>
+
+                    <form id="search" class="pull-right">
+                        <input type="text" name="q" class="form-control text" placeholder="Search class, function or namespace" autofocus>
+                    </form>
+                </nav>
+            </div>
+        </div>
+    </div>
+</div>
+            <div id="breadcrumbs">
+                <div class="container">
+                    <div class="row">
+                        <div class="col-md-12">
+
+
+<div class="pull-left type">
+    <span class="label label-success">Class</span>
+</div>
+
+<ol class="breadcrumb pull-left">
+        <li>
+            <a href="namespace-SAREhub.html">SAREhub</a>
+        </li>
+            <li class="backslash">\</li>
+        <li>
+            <a href="namespace-SAREhub.Commons.html">Commons</a>
+        </li>
+            <li class="backslash">\</li>
+        <li>
+            <a href="namespace-SAREhub.Commons.Process.html">Process</a>
+        </li>
+
+        <li class="backslash">\</li>
+        <li class="active">PcntlSignals</li>
+</ol>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+        <div class="container">
+            <div class="row">
+                <div class="col-md-12">
+    <h1>PcntlSignals</h1>
+
+        <div class="panel panel-default">
+            <div class="panel-body">
+                Helper class for handling linux signals.
+
+Installed signals:
+SIGHUP
+SIGINT
+SIGTERM
+SIGPIPE
+SIGUSR1
+            </div>
+        </div>
+
+
+
+
+    <div class="info">
+        
+
+            <a href="source-class-SAREhub.Commons.Process.PcntlSignals.html" class="open-source-code">Open source code</a>
+        <br>
+    </div>
+
+        <table class="summary table table-bordered table-responsive table-striped" id="methods">
+            <tr><th colspan="3">Methods Summary</th></tr>
+
+
+
+<tr id="_create">
+
+    <td class="attributes col-md-1">
+        <code class="keyword">
+                 public static
+                
+                
+        </code>
+    </td>
+
+    <td class="name">
+        <div>
+            <a class="anchor pull-right" href="#_create">#</a>
+            <code><a href="source-class-SAREhub.Commons.Process.PcntlSignals.html#32-39">create</a>( <span> bool <span class="property-name">$install</span> = <span class="php-keyword1">true</span></span> )</code>
+
+            <div class="description">
+                Factory method, can install default signals.
+
+
+
+
+
+
+
+
+            </div>
+        </div>
+    </td>
+</tr>
+
+
+
+<tr id="_getDefaultInstalledSignals">
+
+    <td class="attributes col-md-1">
+        <code class="keyword">
+                 public static
+                
+                
+        </code>
+    </td>
+
+    <td class="name">
+        <div>
+            <a class="anchor pull-right" href="#_getDefaultInstalledSignals">#</a>
+            <code><a href="source-class-SAREhub.Commons.Process.PcntlSignals.html#41-44">getDefaultInstalledSignals</a>( )</code>
+
+            <div class="description">
+                
+
+
+
+
+
+
+
+
+            </div>
+        </div>
+    </td>
+</tr>
+
+
+
+<tr id="_install">
+
+    <td class="attributes col-md-1">
+        <code class="keyword">
+                 public 
+                
+                
+        </code>
+    </td>
+
+    <td class="name">
+        <div>
+            <a class="anchor pull-right" href="#_install">#</a>
+            <code><a href="source-class-SAREhub.Commons.Process.PcntlSignals.html#50-58">install</a>( <span> array <span class="property-name">$signals</span> </span> )</code>
+
+            <div class="description">
+                Installs selected signal
+
+
+
+
+
+
+
+
+            </div>
+        </div>
+    </td>
+</tr>
+
+
+
+<tr id="_handle">
+
+    <td class="attributes col-md-1">
+        <code class="keyword">
+                 public 
+                
+                
+        </code>
+    </td>
+
+    <td class="name">
+        <div>
+            <a class="anchor pull-right" href="#_handle">#</a>
+            <code><a href="source-class-SAREhub.Commons.Process.PcntlSignals.html#67-80">handle</a>( <span> int <span class="property-name">$signal</span> </span>, <span> callable <span class="property-name">$handler</span> </span>, <span> string <span class="property-name">$namespace</span> = <span class="php-quote">'default'</span></span> )</code>
+
+            <div class="description">
+                Registers handler for signal in selected namespace.
+
+
+
+
+
+
+
+
+            </div>
+        </div>
+    </td>
+</tr>
+
+
+
+<tr id="_dispatchSignal">
+
+    <td class="attributes col-md-1">
+        <code class="keyword">
+                 public 
+                
+                
+        </code>
+    </td>
+
+    <td class="name">
+        <div>
+            <a class="anchor pull-right" href="#_dispatchSignal">#</a>
+            <code><a href="source-class-SAREhub.Commons.Process.PcntlSignals.html#87-98">dispatchSignal</a>( <span> int <span class="property-name">$signal</span> </span> )</code>
+
+            <div class="description">
+                Dispatch signal on registered handlers.
+
+
+
+
+
+
+
+
+            </div>
+        </div>
+    </td>
+</tr>
+
+
+
+<tr id="_getHandlers">
+
+    <td class="attributes col-md-1">
+        <code class="keyword">
+                 public 
+                
+                
+        </code>
+    </td>
+
+    <td class="name">
+        <div>
+            <a class="anchor pull-right" href="#_getHandlers">#</a>
+            <code><a href="source-class-SAREhub.Commons.Process.PcntlSignals.html#104-107">getHandlers</a>( )</code>
+
+            <div class="description">
+                Returns all registered handlers.
+
+
+
+
+
+
+
+
+            </div>
+        </div>
+    </td>
+</tr>
+
+
+
+<tr id="_getHandlersForSignal">
+
+    <td class="attributes col-md-1">
+        <code class="keyword">
+                 public 
+                
+                
+        </code>
+    </td>
+
+    <td class="name">
+        <div>
+            <a class="anchor pull-right" href="#_getHandlersForSignal">#</a>
+            <code><a href="source-class-SAREhub.Commons.Process.PcntlSignals.html#109-112">getHandlersForSignal</a>( <span> <span class="property-name">$signal</span> </span>, <span> <span class="property-name">$namespace</span> = <span class="php-keyword1">NULL</span></span> )</code>
+
+            <div class="description">
+                
+
+
+
+
+
+
+
+
+            </div>
+        </div>
+    </td>
+</tr>
+
+
+
+<tr id="_checkPendingSignals">
+
+    <td class="attributes col-md-1">
+        <code class="keyword">
+                 public 
+                
+                
+        </code>
+    </td>
+
+    <td class="name">
+        <div>
+            <a class="anchor pull-right" href="#_checkPendingSignals">#</a>
+            <code><a href="source-class-SAREhub.Commons.Process.PcntlSignals.html#117-122">checkPendingSignals</a>( )</code>
+
+            <div class="description">
+                Calls pcntl_signal_dispatch for process pending signals.
+
+
+
+
+
+
+
+
+            </div>
+        </div>
+    </td>
+</tr>
+
+
+
+<tr id="_isSupported">
+
+    <td class="attributes col-md-1">
+        <code class="keyword">
+                 public static
+                
+                
+        </code>
+    </td>
+
+    <td class="name">
+        <div>
+            <a class="anchor pull-right" href="#_isSupported">#</a>
+            <code><a href="source-class-SAREhub.Commons.Process.PcntlSignals.html#127-130">isSupported</a>( )</code>
+
+            <div class="description">
+                
+
+
+
+
+
+
+
+
+            </div>
+        </div>
+    </td>
+</tr>
+        </table>
+
+
+
+        <table class="summary table table-bordered table-responsive table-striped" id="constants">
+            <tr><th colspan="3">Constants Summary</th></tr>
+<tr id="SIGHUP">
+    <td class="attributes">
+        <code class="keyword">
+        public
+        
+        
+        int
+        </code>
+    </td>
+    <td class="name">
+        <code>
+            <a href="source-class-SAREhub.Commons.Process.PcntlSignals.html#17" class="constant-name">SIGHUP</a>
+        </code>
+
+        <div class="description">
+            
+
+        </div>
+    </td>
+    <td class="value">
+        <div>
+            <a href="#SIGHUP" class="anchor pull-right">#</a>
+            <code><span class="php-num">1</span></code>
+        </div>
+    </td>
+</tr>
+<tr id="SIGINT">
+    <td class="attributes">
+        <code class="keyword">
+        public
+        
+        
+        int
+        </code>
+    </td>
+    <td class="name">
+        <code>
+            <a href="source-class-SAREhub.Commons.Process.PcntlSignals.html#18" class="constant-name">SIGINT</a>
+        </code>
+
+        <div class="description">
+            
+
+        </div>
+    </td>
+    <td class="value">
+        <div>
+            <a href="#SIGINT" class="anchor pull-right">#</a>
+            <code><span class="php-num">2</span></code>
+        </div>
+    </td>
+</tr>
+<tr id="SIGTERM">
+    <td class="attributes">
+        <code class="keyword">
+        public
+        
+        
+        int
+        </code>
+    </td>
+    <td class="name">
+        <code>
+            <a href="source-class-SAREhub.Commons.Process.PcntlSignals.html#19" class="constant-name">SIGTERM</a>
+        </code>
+
+        <div class="description">
+            
+
+        </div>
+    </td>
+    <td class="value">
+        <div>
+            <a href="#SIGTERM" class="anchor pull-right">#</a>
+            <code><span class="php-num">15</span></code>
+        </div>
+    </td>
+</tr>
+<tr id="SIGPIPE">
+    <td class="attributes">
+        <code class="keyword">
+        public
+        
+        
+        int
+        </code>
+    </td>
+    <td class="name">
+        <code>
+            <a href="source-class-SAREhub.Commons.Process.PcntlSignals.html#20" class="constant-name">SIGPIPE</a>
+        </code>
+
+        <div class="description">
+            
+
+        </div>
+    </td>
+    <td class="value">
+        <div>
+            <a href="#SIGPIPE" class="anchor pull-right">#</a>
+            <code><span class="php-num">13</span></code>
+        </div>
+    </td>
+</tr>
+<tr id="SIGUSR1">
+    <td class="attributes">
+        <code class="keyword">
+        public
+        
+        
+        int
+        </code>
+    </td>
+    <td class="name">
+        <code>
+            <a href="source-class-SAREhub.Commons.Process.PcntlSignals.html#21" class="constant-name">SIGUSR1</a>
+        </code>
+
+        <div class="description">
+            
+
+        </div>
+    </td>
+    <td class="value">
+        <div>
+            <a href="#SIGUSR1" class="anchor pull-right">#</a>
+            <code><span class="php-num">10</span></code>
+        </div>
+    </td>
+</tr>
+<tr id="DEFAULT_NAMESPACE">
+    <td class="attributes">
+        <code class="keyword">
+        public
+        
+        
+        string
+        </code>
+    </td>
+    <td class="name">
+        <code>
+            <a href="source-class-SAREhub.Commons.Process.PcntlSignals.html#23" class="constant-name">DEFAULT_NAMESPACE</a>
+        </code>
+
+        <div class="description">
+            
+
+        </div>
+    </td>
+    <td class="value">
+        <div>
+            <a href="#DEFAULT_NAMESPACE" class="anchor pull-right">#</a>
+            <code><span class="php-quote">'default'</span></code>
+        </div>
+    </td>
+</tr>
+        </table>
+
+
+
+
+    <div id="footer">
+        Generated by <a href="https://github.com/apigen/apigen">ApiGen</a>
+    </div>
+                </div>
+            </div>
+        </div>
+
+        <script src="resources/jquery-3.2.1.min.js"></script>
+        <script src="resources/jquery-ui-1.12.1.min.js"></script>
+
+        <script src="elementlist.js"></script>
+        <script src="resources/main.js"></script>
+    </body>
+</html>
+
+
