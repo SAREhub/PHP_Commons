@@ -6,6 +6,7 @@ use PHPUnit\Framework\TestCase;
 
 class EnvironmentHelperTest extends TestCase
 {
+
     public function testGetVarWhenExists()
     {
         $variableName = $this->getName();
@@ -15,9 +16,24 @@ class EnvironmentHelperTest extends TestCase
 
     public function testGetVarWhenNotExists()
     {
-        $variableName = $this->getName();
         $defaultValue = 1;
-        $this->assertEquals($defaultValue, EnvironmentHelper::getVar($variableName, $defaultValue));
+        $this->assertEquals($defaultValue, EnvironmentHelper::getVar("not_exists_var", $defaultValue));
+    }
+
+    public function testGetRequiredVarWhenExists()
+    {
+        $variableName = $this->getName();
+        $this->putenv($variableName, 1);
+        $this->assertEquals(1, EnvironmentHelper::getRequiredVar($variableName));
+    }
+
+    /**
+     * @throws EnvVarNotFoundException
+     */
+    public function testGetRequiredVarWhenNotExists()
+    {
+        $this->expectException(EnvVarNotFoundException::class);
+        EnvironmentHelper::getRequiredVar("not_exists_var");
     }
 
     public function testGetVarsWhenExists()
@@ -30,7 +46,7 @@ class EnvironmentHelperTest extends TestCase
 
     public function testGetVarsWhenNotExists()
     {
-        $variableName = $this->getName();
+        $variableName = "not_exists_var";
         $defaultValue = 1;
         $this->assertEquals([$variableName => $defaultValue], EnvironmentHelper::getVars([$variableName => $defaultValue]));
     }

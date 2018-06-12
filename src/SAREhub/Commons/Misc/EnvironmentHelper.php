@@ -18,6 +18,21 @@ class EnvironmentHelper
     }
 
     /**
+     * Returns value of environment variable or throws Exception when is not defined
+     * @param string $name
+     * @return mixed value from env
+     * @throws EnvVarNotFoundException
+     */
+    public static function getRequiredVar(string $name)
+    {
+        $value = getenv($name);
+        if ($value === false) {
+            throw EnvVarNotFoundException::create($name);
+        }
+        return $value;
+    }
+
+    /**
      * Returns values of environment variables defined in schema parameter
      * @param array $schema Format: ["variableName" => defaultValue]
      * @param string $prefix Its added to variableName when getting value from env
@@ -29,7 +44,6 @@ class EnvironmentHelper
         foreach ($schema as $name => $default) {
             $env[$name] = self::getVar($prefix . $name, $default);
         }
-
         return $env;
     }
 }
