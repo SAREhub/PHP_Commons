@@ -4,7 +4,7 @@
 namespace SAREhub\Commons\Misc;
 
 
-class EnvVarNotFoundException extends \Exception
+class EnvVarNotFoundException extends \RuntimeException
 {
     const MESSAGE_FORMAT = "Not found value of env var: %s";
 
