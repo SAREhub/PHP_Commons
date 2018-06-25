@@ -18,7 +18,8 @@
     "roave/better-reflection": "dev-master#c87d856",
     "guzzlehttp/guzzle": "~6.0",
     "nannehuiges/jsend": "2.1.*",
-    "monolog/monolog": "1.*"
+    "monolog/monolog": "1.*",
+    "php-di/php-di": "^6.0"
   },
   "require": {
     "php": "^7.1"
