@@ -93,7 +93,6 @@ abstract class ServiceSupport implements Service
 
     /**
      * Contains custom worker start logic
-     * @throws \Exception When something was wrong.
      */
     protected function doStart()
     {
@@ -102,7 +101,6 @@ abstract class ServiceSupport implements Service
 
     /**
      * Contains custom worker tick logic
-     * @throws \Exception When something was wrong.
      */
     protected function doTick()
     {
@@ -111,7 +109,6 @@ abstract class ServiceSupport implements Service
 
     /**
      * Contains custom worker stop logic
-     * @throws \Exception When something was wrong.
      */
     protected function doStop()
     {

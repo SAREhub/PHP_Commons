@@ -10,19 +10,16 @@ interface Service extends LoggerAwareInterface
 
     /**
      * Executed for start service.
-     * @throws \RuntimeException When something was wrong.
      */
     public function start();
 
     /**
      * Executed on every service tick.
-     * @throws \RuntimeException When something was wrong.
      */
     public function tick();
 
     /**
      * Executed for stop service
-     * @throws \RuntimeException When something was wrong.
      */
     public function stop();
 
