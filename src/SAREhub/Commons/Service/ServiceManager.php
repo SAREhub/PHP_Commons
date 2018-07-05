@@ -6,6 +6,9 @@ namespace SAREhub\Commons\Service;
 
 class ServiceManager extends ServiceSupport
 {
+    /**
+     * @var Service[]
+     */
     private $services;
 
     /**
@@ -15,7 +18,6 @@ class ServiceManager extends ServiceSupport
     {
         $this->services = $services;
     }
-
 
     protected function doStart()
     {
@@ -38,8 +40,11 @@ class ServiceManager extends ServiceSupport
         }
     }
 
+    /**
+     * @return Service[]
+     */
     public function getServices(): array
     {
-
+        return $this->services;
     }
 }
