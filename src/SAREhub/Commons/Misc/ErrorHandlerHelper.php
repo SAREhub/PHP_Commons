@@ -8,11 +8,11 @@ use ErrorException;
 
 class ErrorHandlerHelper
 {
-    public static function registerDefaultErrorHandler()
+    public static function registerDefaultErrorHandler($errorTypes = E_ALL)
     {
-        self::enableErrorReporting(E_ALL);
+        self::enableErrorReporting($errorTypes);
         self::hideDisplayErrors();
-        self::registerErrorToExceptionHandler(E_ALL);
+        self::registerErrorToExceptionHandler($errorTypes);
     }
 
     public static function enableErrorReporting($errorTypes)
