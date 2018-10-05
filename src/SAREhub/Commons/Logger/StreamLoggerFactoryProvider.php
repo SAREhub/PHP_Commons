@@ -13,8 +13,8 @@ use SAREhub\Commons\Misc\InvokableProvider;
 class StreamLoggerFactoryProvider extends InvokableProvider
 {
     const DEFAULT_LOGGING_LEVEL = "DEBUG";
-
     const DEFAULT_STREAM = 'php://stdout';
+
     /**
      * @var string
      */
@@ -25,9 +25,14 @@ class StreamLoggerFactoryProvider extends InvokableProvider
      */
     private $formatter;
 
+    /**
+     * @var resource|string
+     */
+    private $stream;
+
     public function __construct(
         string $level = self::DEFAULT_LOGGING_LEVEL,
-        ?FormatterInterface $formatter,
+        ?FormatterInterface $formatter = null,
         $stream = self::DEFAULT_STREAM
     )
     {
