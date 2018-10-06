@@ -4,7 +4,8 @@ namespace SAREhub\Commons\Misc;
 
 
 /**
- * Time provider for better control time operations with time frezing future.
+ * Time provider for better control time operations with time freezing future.
+ * soon will be deprecated Use @see \SAREhub\Commons\Time\TimeProvider
  */
 class TimeProvider
 {
