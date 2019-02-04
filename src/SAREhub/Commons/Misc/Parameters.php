@@ -11,25 +11,26 @@ class Parameters implements \JsonSerializable
     /**
      * @var array
      */
-    private $parameters;
+    private $params;
 
-    public function __construct(array $parameters)
+    public function __construct(array $params)
     {
-        $this->parameters = $parameters;
+        $this->params = $params;
     }
 
-    public static function createFlatten($parameters)
+    public static function create(array $params): self
     {
-        return new Parameters(ArrayHelper::flatten($parameters));
+        return new self($params);
     }
 
-    /**
-     * @param string $json
-     * @return self
-     */
-    public static function createFromJson($json)
+    public static function createFlatten(array $params): self
     {
-        return new self(json_decode($json, true));
+        return self::create(ArrayHelper::flatten($params));
+    }
+
+    public static function createFromJson(string $json): self
+    {
+        return self::create(json_decode($json, true));
     }
 
     /**
@@ -37,72 +38,55 @@ class Parameters implements \JsonSerializable
      * @param mixed $default
      * @return mixed
      */
-    public function get($name, $default = null)
+    public function get(string $name, $default = null)
     {
-        return ($this->has($name)) ? $this->parameters[$name] : $default;
+        return ($this->has($name)) ? $this->params[$name] : $default;
     }
 
-    public function getRequired($name)
+    /**
+     * @param string $name
+     * @return mixed
+     */
+    public function getRequired(string $name)
     {
         if ($this->has($name)) {
-            return $this->parameters[$name];
+            return $this->params[$name];
         }
 
         throw new NotFoundParameterException("Required parameter doesn't exists: $name");
     }
 
-    /**
-     * @param string $name
-     * @param array $default
-     * @return self
-     * @throws \Exception
-     */
-    public function getAsMap($name, array $default = [])
+    public function getAsMap(string $name, array $default = []): self
     {
-        $parameters = $this->get($name, $default);
-        if (is_array($parameters)) {
-            return new self($parameters);
+        $params = $this->get($name, $default);
+        if (is_array($params)) {
+            return self::create($params);
         }
 
         throw new ParameterException("Parameter isn't array: $name");
     }
 
-    /**
-     * @param $name
-     * @return self
-     * @throws \Exception
-     */
-    public function getRequiredAsMap($name)
+    public function getRequiredAsMap(string $name): self
     {
-        $parameters = $this->getRequired($name);
-        if (is_array($parameters)) {
-            return new self($parameters);
+        $params = $this->getRequired($name);
+        if (is_array($params)) {
+            return self::create($params);
         }
 
         throw new ParameterException("Parameter isn't array: $name");
     }
 
-    /**
-     * @param $name
-     * @return bool
-     */
-    public function has($name)
+    public function has(string $name): bool
     {
-        return isset($this->parameters[$name]);
+        return isset($this->params[$name]);
     }
 
-    /**
-     * @return array
-     */
-    public function getAll()
+    public function getAll(): array
     {
-        return $this->parameters;
+        return $this->params;
     }
 
-    /**
-     * @return array
-     */
-    function jsonSerialize()
+    public function jsonSerialize()
     {
         return $this->getAll();
     }

@@ -2,7 +2,7 @@
 
 namespace SAREhub\Commons\Misc;
 
-class ParameterException extends \Exception
+class ParameterException extends \RuntimeException
 {
 
 }
