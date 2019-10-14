@@ -24,6 +24,7 @@
   "suggest": {
     "guzzlehttp/guzzle": "~6.0 Used for rest api and other http communication",
     "nannehuiges/jsend": "2.1.* Used for rest api",
+    "php-di/php-di": "^6.* Used for DI integration",
     "ext-zmq": "when using ZMQ subpackage"
   },
   "autoload": {
