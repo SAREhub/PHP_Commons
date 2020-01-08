@@ -16,7 +16,8 @@
     "guzzlehttp/guzzle": "~6.0",
     "nannehuiges/jsend": "2.1.*",
     "monolog/monolog": "1.*",
-    "php-di/php-di": "^6.0"
+    "php-di/php-di": "^6.0",
+    "dragonmantank/cron-expression": "^2.3"
   },
   "require": {
     "php": "^7.1"
@@ -25,7 +26,8 @@
     "guzzlehttp/guzzle": "~6.0 Used for rest api and other http communication",
     "nannehuiges/jsend": "2.1.* Used for rest api",
     "php-di/php-di": "^6.* Used for DI integration",
-    "ext-zmq": "when using ZMQ subpackage"
+    "ext-zmq": "when using ZMQ subpackage",
+    "dragonmantank/cron-expression": "^2.3 when using cron staff"
   },
   "autoload": {
     "psr-4": {
