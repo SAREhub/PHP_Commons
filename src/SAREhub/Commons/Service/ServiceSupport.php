@@ -19,11 +19,11 @@ abstract class ServiceSupport implements Service
     public function start()
     {
         if (!$this->isStarted()) {
-            $this->getLogger()->info('service starting ...');
+            $this->getLogger()->notice('service starting ...');
             $this->doStart();
             $this->started = true;
             $this->stopped = false;
-            $this->getLogger()->info('service started');
+            $this->getLogger()->notice('service started');
         }
     }
 
@@ -37,7 +37,7 @@ abstract class ServiceSupport implements Service
             try {
                 $this->stop();
             } catch (\Exception $e2) {
-                // we wants only orginal exception
+                // we wants only original exception
             }
 
             throw $e;
@@ -48,12 +48,12 @@ abstract class ServiceSupport implements Service
     {
         if ($this->isStarted()) {
             try {
-                $this->getLogger()->info('service stopping ...');
+                $this->getLogger()->notice('service stopping ...');
                 $this->doStop();
             } finally {
                 $this->started = false;
                 $this->stopped = true;
-                $this->getLogger()->info('service stopped');
+                $this->getLogger()->notice('service stopped');
             }
         }
     }
